@@ -1,0 +1,43 @@
+[AlCl4] --  Tetrafluoroaluminate
+[BMIM]  --  1-Butyl-3-methylimidazolium 
+[BNZ]   --  Benzoate
+[Br]    --  Bromide
+[Cl]    --  Chloride
+[ClO4]  --  Perchlorate
+[EMIM]  --  1-Ethyl-3-methylimidazolium
+[HCOO]  --  Formate
+[MS]    --  Methylsulfate
+[NO3]   --  Nitrate
+[NPF2]  --  Bis(pentafluoroethylsulfonyl)amide
+[OMIM]  --  1-Octyl-3-methylimidazolium
+[PROP]  --  Propionate
+[FSI]   -- Bis(fluorosulfonyl)imide
+[TFSI or NTf2] -- Bis(trifluoromethane)sulfonimide
+[Beti]  -- Bis(perfluoroethylsulfonyl)imide
+[BF4]   -- Tetrafluoroborate
+[PF6]   -- Hexafluorophosphate
+[dca]   -- Dicyanamide
+[C(CN)3] -- Tricyanomethanide
+[CNS]   -- Thiocyanate
+[OAc]   -- Acetate
+[TFA]   -- Trifluorocetate
+[OTf]   -- Triflate
+[OTs]   -- Tosylate
+[RSO3]  -- Alkylsulfonates
+[RSO4]  -- Alkylsulfates
+
+
+** [ACE]   --  Acetate
+** [BF4]   --  Tetrafluoroborate
+** [DCA]   --  Dicyanamide
+** [NTF2]  --  Bis(trifluoromethylsulfonyl)amide
+** [PF6]   --  Hexafluorophosphate
+** [SCN]   --  Thiocyanate
+** [TCM]   --  Tricyanomethanide 
+** [TFO]   --  Trifluoromethanesulfonate
+
+conda run -p /scratch/midway3/eshiemogie/conda_envs/gpu_electronn python /project/chibueze/stanley/projects/li-na-md/generate_500_solvents.py
+
+
+
+
