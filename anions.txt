@@ -1,3 +1,65 @@
+[Li+].Cl[Al-](Cl)(Cl)Cl
+[Li+].F[Al-](F)(F)F
+[Li+].CCCCn1cc[n+](C)c1
+[Li+].O=C([O-])c1ccccc1
+[Li+].[Br-]
+[Li+].[Cl-]
+[Li+].[O-]Cl(=O)(=O)=O
+[Li+].CCn1cc[n+](C)c1
+[Li+].[O-]C=O
+[Li+].COS(=O)(=O)[O-]
+[Li+].[O-][N+](=O)[O-]
+[Li+].FC(F)(F)C(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)C(F)(F)F
+[Li+].CCCCCCCCn1cc[n+](C)c1
+[Li+].CCC(=O)[O-]
+[Li+].FS(=O)(=O)[N-]S(=O)(=O)F
+[Li+].FC(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F
+[Li+].FC(F)(F)C(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)C(F)(F)F
+[Li+].F[B-](F)(F)F
+[Li+].F[P-](F)(F)(F)(F)F
+[Li+].N#C[N-]C#N
+[Li+].N#C[C-](C#N)C#N
+[Li+].[S-]C#N
+[Li+].CC(=O)[O-]
+[Li+].FC(F)(F)C(=O)[O-]
+[Li+].FC(F)(F)S(=O)(=O)[O-]
+[Li+].Cc1ccc(S(=O)(=O)[O-])cc1
+[Li+].S(=O)(=O)[O-]
+[Li+].OS(=O)(=O)[O-]
+
+
+[Na+].Cl[Al-](Cl)(Cl)Cl
+[Na+].F[Al-](F)(F)F
+[Na+].CCCCn1cc[n+](C)c1
+[Na+].O=C([O-])c1ccccc1
+[Na+].[Br-]
+[Na+].[Cl-]
+[Na+].[O-]Cl(=O)(=O)=O
+[Na+].CCn1cc[n+](C)c1
+[Na+].[O-]C=O
+[Na+].COS(=O)(=O)[O-]
+[Na+].[O-][N+](=O)[O-]
+[Na+].FC(F)(F)C(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)C(F)(F)F
+[Na+].CCCCCCCCn1cc[n+](C)c1
+[Na+].CCC(=O)[O-]
+[Na+].FS(=O)(=O)[N-]S(=O)(=O)F
+[Na+].FC(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F
+[Na+].FC(F)(F)C(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)C(F)(F)F
+[Na+].F[B-](F)(F)F
+[Na+].F[P-](F)(F)(F)(F)F
+[Na+].N#C[N-]C#N
+[Na+].N#C[C-](C#N)C#N
+[Na+].[S-]C#N
+[Na+].CC(=O)[O-]
+[Na+].FC(F)(F)C(=O)[O-]
+[Na+].FC(F)(F)S(=O)(=O)[O-]
+[Na+].Cc1ccc(S(=O)(=O)[O-])cc1
+[Na+].S(=O)(=O)[O-]
+[Na+].OS(=O)(=O)[O-]
+
+
+
+
 [AlCl4] --  Tetrafluoroaluminate
 [BMIM]  --  1-Butyl-3-methylimidazolium 
 [BNZ]   --  Benzoate
@@ -35,3 +97,4 @@
 ** [SCN]   --  Thiocyanate
 ** [TCM]   --  Tricyanomethanide 
 ** [TFO]   --  Trifluoromethanesulfonate
+
