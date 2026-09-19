@@ -24,11 +24,10 @@ from tqdm import tqdm
 from rdkit import Chem
 from rdkit.Chem.Descriptors import ExactMolWt
 
-ORIG = '/project2/chibueze/jaemink/genMolGPT/MolGPT_DrugDesign'
+ORIG = '/project2/chibueze/jaemink/genMolGPT/Electrolyte-GPT'
 MODEL_DIR = f'{ORIG}/pretrained_models'
 JSON_DIR = f'{ORIG}/json'
 
-# Use the original model/utils that match the checkpoint format
 sys.path.insert(0, ORIG)
 from model import GPT, GPTConfig
 from utils import sample, canonic_smiles
@@ -63,7 +62,7 @@ def is_organic_solvent(mol):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_weight', default='Jaemin_unconditioned_range_20epoch.pt')
+    parser.add_argument('--model_weight', default='Jaemin_unconditioned_20epoch.pt')
     parser.add_argument('--data_name', default='Jaemin_trainingdataset_7properties2')
     parser.add_argument('--target', type=int, default=500)
     parser.add_argument('--batch_size', type=int, default=192)
@@ -87,8 +86,7 @@ def main():
 
     # Load model — scaffold_maxlen=1 matches how the checkpoint was saved
     mconf = GPTConfig(args.vocab_size, args.block_size, num_props=0,
-                      n_layer=args.n_layer, n_head=args.n_head, n_embd=args.n_embd,
-                      scaffold=False, scaffold_maxlen=1, lstm=False, lstm_layers=0)
+                      n_layer=args.n_layer, n_head=args.n_head, n_embd=args.n_embd)
     model = GPT(mconf)
     model.load_state_dict(torch.load(os.path.join(MODEL_DIR, args.model_weight),
                                      map_location=device))
