@@ -35,9 +35,3 @@
 ** [SCN]   --  Thiocyanate
 ** [TCM]   --  Tricyanomethanide 
 ** [TFO]   --  Trifluoromethanesulfonate
-
-conda run -p /scratch/midway3/eshiemogie/conda_envs/gpu_electronn python /project/chibueze/stanley/projects/li-na-md/generate_500_solvents.py
-
-
-
-
