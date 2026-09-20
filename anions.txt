@@ -73,20 +73,22 @@
 [NPF2]  --  Bis(pentafluoroethylsulfonyl)amide
 [OMIM]  --  1-Octyl-3-methylimidazolium
 [PROP]  --  Propionate
-[FSI]   -- Bis(fluorosulfonyl)imide
-[TFSI or NTf2] -- Bis(trifluoromethane)sulfonimide
-[Beti]  -- Bis(perfluoroethylsulfonyl)imide
-[BF4]   -- Tetrafluoroborate
-[PF6]   -- Hexafluorophosphate
-[dca]   -- Dicyanamide
+
+/ [FSI]   -- Bis(fluorosulfonyl)imide
+/ [TFSI or NTf2] -- Bis(trifluoromethane)sulfonimide
+/ [Beti]  -- Bis(perfluoroethylsulfonyl)imide
+/ [BF4]   -- Tetrafluoroborate
+/ [PF6]   -- Hexafluorophosphate
+/ [dca]   -- Dicyanamide
 [C(CN)3] -- Tricyanomethanide
-[CNS]   -- Thiocyanate
-[OAc]   -- Acetate
-[TFA]   -- Trifluorocetate
-[OTf]   -- Triflate
-[OTs]   -- Tosylate
-[RSO3]  -- Alkylsulfonates
-[RSO4]  -- Alkylsulfates
+/ [CNS]   -- Thiocyanate
+/ [OAc]   -- Acetate
+/ [TFA]   -- Trifluorocetate
+/ [OTf]   -- Triflate
+/ [OTs]   -- Tosylate
+/ [RSO3]  -- Alkylsulfonates
+/ [RSO4]  -- Alkylsulfates
+/ [phoac] -- Phenylacetate (not in pdf by the zmat file is contained in CL&P)
 
 
 ** [ACE]   --  Acetate

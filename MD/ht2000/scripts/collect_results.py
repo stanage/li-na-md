@@ -19,9 +19,58 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import INDEX, RUNS  # noqa: E402
+from common import DATASET, INDEX, N_AVOGADRO, RUNS, run_key  # noqa: E402
 
 STAGES = ["em", "nvt_heat", "npt", "prod"]
+
+
+def dataset_rows() -> dict[str, int]:
+    """run key -> 0-based row number in the source CSV.
+
+    Run directories are named by a content hash of (salt, solvent, molarity),
+    which is stable but unreadable; this recovers the link back to the dataset
+    so a result can be traced to the row that produced it.
+    """
+    if not DATASET.exists():
+        print(f"warning: {DATASET} not found; row_index will be blank")
+        return {}
+    df = pd.read_csv(DATASET)
+    out: dict[str, int] = {}
+    for i, r in df.iterrows():
+        out[run_key(r["salt"], r["solvent"], float(r["concentration"]))] = int(i)
+    return out
+
+
+def box_volume_nm3(gro: Path) -> float | None:
+    """Box volume from the last line of a .gro file.
+
+    The line holds v1x v2y v3z and, for triclinic cells, six more off-diagonal
+    terms; the volume is the determinant, which for the upper-triangular form
+    GROMACS writes is just the product of the diagonal.
+    """
+    if not gro.exists():
+        return None
+    last = gro.read_text().rstrip().rsplit("\n", 1)[-1].split()
+    try:
+        v = [float(x) for x in last[:3]]
+    except (ValueError, IndexError):
+        return None
+    return v[0] * v[1] * v[2] if len(v) == 3 else None
+
+
+def achieved_molarity(d: Path, n_salt: int) -> tuple[float | None, float | None]:
+    """(molarity, box edge) actually sampled, from the equilibrated box.
+
+    Production runs NVT, so its box is fixed at whatever NPT settled on -- that
+    is the concentration the trajectory really represents. It differs from the
+    requested molarity whenever the assumed component densities behind
+    compute_counts() were off, and NPT cannot correct that: it relaxes the
+    volume, not the molecule counts.
+    """
+    vol = box_volume_nm3(d / "prod.gro") or box_volume_nm3(d / "npt.gro")
+    if not vol:
+        return None, None
+    return n_salt / (vol * N_AVOGADRO / 1e24), vol ** (1.0 / 3.0)
 
 
 def mean_density(xvg: Path) -> float | None:
@@ -69,22 +118,34 @@ def main() -> int:
     ap.add_argument("--out", type=Path, default=INDEX / "results.csv")
     args = ap.parse_args()
 
+    row_of = dataset_rows()
+
     rows = []
     for d in sorted(RUNS.glob("el*")):
         if not (d / "summary.json").exists():
             continue
         s = json.loads((d / "summary.json").read_text())
+        n_salt = s["counts"]["cat"]
+        m_act, box_eq = achieved_molarity(d, n_salt)
+        req = s["spec"]["salt_M"]
         row = {
             "key": s["name"],
+            "row_index": row_of.get(s["name"]),
+            "csv_line": (row_of[s["name"]] + 2) if s["name"] in row_of else None,
             "cation": s.get("cation"),
             "anion": s.get("anion"),
             "salt_smi": s["spec"]["salt_smi"],
             "solvent_smi": s["spec"]["solvents"][0]["smi"],
-            "molarity": s["spec"]["salt_M"],
+            "molarity": req,
+            "molarity_actual": m_act,
+            "molarity_err_pct": (100.0 * (m_act - req) / req
+                                 if m_act is not None and req else None),
             "n_solvent": s["counts"]["sol1"],
-            "n_salt": s["counts"]["cat"],
+            "n_salt": n_salt,
+            "solv_per_ion_pair": s["counts"]["sol1"] / n_salt if n_salt else None,
             "n_atoms": s.get("n_atoms"),
             "box_build_nm": s.get("box_build_nm"),
+            "box_equil_nm": box_eq,
             "net_charge": s.get("net_charge"),
             "q_scale": s.get("q_scale"),
             "stage": stage_reached(d),
@@ -125,9 +186,19 @@ def main() -> int:
     done = df[df.get("cn_solv_O").notna()] if "cn_solv_O" in df else df.iloc[:0]
     print(f"\nwith solvation analysis: {len(done)}")
     if len(done):
-        cols = ["key", "cation", "anion", "molarity", "density_g_cm3",
+        cols = ["key", "cation", "anion", "molarity", "molarity_actual",
+                "molarity_err_pct", "solv_per_ion_pair", "density_g_cm3",
                 "cn_solv_O", "cn_anion", "ssip", "cip", "agg"]
         print(done[[c for c in cols if c in done]].to_string(index=False))
+
+    drift = df["molarity_err_pct"].abs() if "molarity_err_pct" in df else None
+    if drift is not None and drift.notna().any():
+        bad = df[drift > 10]
+        print(f"\nmolarity drift (requested -> equilibrated): "
+              f"median {drift.median():.1f}%, max {drift.max():.1f}%")
+        if len(bad):
+            print(f"  {len(bad)} run(s) off by >10% -- the assumed component "
+                  f"densities in compute_counts() are the usual cause")
     print(f"\n-> {args.out}")
     return 0
 
