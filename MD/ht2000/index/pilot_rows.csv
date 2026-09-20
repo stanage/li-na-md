@@ -1,0 +1,3 @@
+key,salt,salt_orig,solvent,concentration,cation,anion,reason
+el4f3bbcd28325,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCCC(C)C(C=O)C(=O)C(C)(C#N)C=O,0.3,Li,FSI,baseline -- the salt the old 800-run campaign used
+el7378a10bbeb1,[Na+].[N-](S(=O)(=O)F)S(=O)(=O)F,[Na+].[N-](S(=O)(=O)F)S(=O)(=O)F,COC1(CC(C)CC(F)(F)F)C(C)C1CC=O,3.0,Na,FSI,"same anion, Na+ -- isolates the new cation"

@@ -1,0 +1,465 @@
+run:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+node: midway3-0281.rcc.local  GPU: Tesla V100-PCIE-16GB
+start: Sat Sep 19 19:04:26 CDT 2026
+== em
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi grompp -f em.mdp -c mixture.gro -p system.top -o em.tpr -maxwarn 5
+
+Setting the LD random seed to -647368710
+
+Generated 741 of the 741 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 741 of the 741 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+Excluding 3 bonded neighbours molecule type 'Li+'
+
+Excluding 3 bonded neighbours molecule type 'an'
+Analysing residue names:
+There are:   924      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Number of degrees of freedom in T-Coupling group rest is 93393.00
+The integrator does not provide a ensemble temperature, there is no system ensemble temperature
+
+The largest distance between excluded atoms is 0.397 nm between atom 8780 and 8784
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 72x72x72, spacing 0.113 0.113 0.113
+
+Estimate for the relative computational load of the PME mesh part: 0.30
+
+This run will generate roughly 2 Mb of data
+
+GROMACS reminds you: "We're having an information explosion, among others, and it's certainly obvious that information is of no use unless it's available." (Sister Mary Kenneth Keller)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi mdrun -deffnm em -ntomp 16 -nb gpu -bonded cpu -pme cpu -v
+
+Reading file em.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 1 GPU task in the 1 rank on this node:
+  PP:0
+PP tasks will do (non-perturbed) short-ranged interactions on the GPU
+PP task will update and constrain coordinates on the CPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 16 OpenMP threads 
+
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+03
+   Number of steps    =         5000
+Step=    0, Dmax= 1.0e-02 nm, Epot=  7.18139e+02 Fmax= 6.04926e+04, atom= 9287
+Step=    1, Dmax= 1.0e-02 nm, Epot= -1.81007e+03 Fmax= 1.49276e+04, atom= 30987
+Step=    2, Dmax= 1.2e-02 nm, Epot= -7.78732e+03 Fmax= 6.84917e+03, atom= 9286
+Step=    3, Dmax= 1.4e-02 nm, Epot= -1.26846e+04 Fmax= 8.87222e+03, atom= 9287
+Step=    4, Dmax= 1.7e-02 nm, Epot= -1.47435e+04 Fmax= 1.80084e+04, atom= 9286
+Step=    5, Dmax= 2.1e-02 nm, Epot= -1.58118e+04 Fmax= 1.04128e+04, atom= 9286
+Step=    6, Dmax= 2.5e-02 nm, Epot= -1.68603e+04 Fmax= 2.62779e+04, atom= 9286
+Step=    7, Dmax= 3.0e-02 nm, Epot= -1.77057e+04 Fmax= 1.49391e+04, atom= 9286
+Step=    8, Dmax= 3.6e-02 nm, Epot= -1.77620e+04 Fmax= 3.64736e+04, atom= 9286
+Step=    9, Dmax= 4.3e-02 nm, Epot= -1.87425e+04 Fmax= 2.29278e+04, atom= 9286
+Step=   10, Dmax= 5.2e-02 nm, Epot= -1.74318e+04 Fmax= 5.01706e+04, atom= 9286Step=   11, Dmax= 2.6e-02 nm, Epot= -1.93798e+04 Fmax= 1.36336e+04, atom= 9286
+Step=   12, Dmax= 3.1e-02 nm, Epot= -1.91911e+04 Fmax= 2.92567e+04, atom= 9286Step=   13, Dmax= 1.5e-02 nm, Epot= -1.98089e+04 Fmax= 7.81218e+03, atom= 9286
+Step=   14, Dmax= 1.9e-02 nm, Epot= -2.00104e+04 Fmax= 1.84510e+04, atom= 9286
+Step=   15, Dmax= 2.2e-02 nm, Epot= -2.04776e+04 Fmax= 1.23413e+04, atom= 9286
+Step=   16, Dmax= 2.7e-02 nm, Epot= -1.98379e+04 Fmax= 2.54189e+04, atom= 9286Step=   17, Dmax= 1.3e-02 nm, Epot= -2.08863e+04 Fmax= 6.54693e+03, atom= 9286
+Step=   18, Dmax= 1.6e-02 nm, Epot= -2.07464e+04 Fmax= 1.54836e+04, atom= 9286Step=   19, Dmax= 8.0e-03 nm, Epot= -2.11650e+04 Fmax= 4.47265e+03, atom= 9286
+Step=   20, Dmax= 9.6e-03 nm, Epot= -2.12899e+04 Fmax= 9.25115e+03, atom= 9286
+Step=   21, Dmax= 1.2e-02 nm, Epot= -2.15876e+04 Fmax= 8.18246e+03, atom= 30985
+Step=   22, Dmax= 1.4e-02 nm, Epot= -2.14862e+04 Fmax= 1.21682e+04, atom= 30985Step=   23, Dmax= 6.9e-03 nm, Epot= -2.19752e+04 Fmax= 2.05040e+03, atom= 30985
+Step=   24, Dmax= 8.3e-03 nm, Epot= -2.20733e+04 Fmax= 1.23237e+04, atom= 30985
+Step=   25, Dmax= 1.0e-02 nm, Epot= -2.27153e+04 Fmax= 2.63127e+03, atom= 30985
+Step=   26, Dmax= 1.2e-02 nm, Epot= -2.23054e+04 Fmax= 1.74039e+04, atom= 30985Step=   27, Dmax= 6.0e-03 nm, Epot= -2.28739e+04 Fmax= 7.35157e+03, atom= 30985
+Step=   28, Dmax= 7.2e-03 nm, Epot= -2.31377e+04 Fmax= 3.27369e+03, atom= 30985
+Step=   29, Dmax= 8.6e-03 nm, Epot= -2.31165e+04 Fmax= 1.08164e+04, atom= 30985Step=   30, Dmax= 4.3e-03 nm, Epot= -2.33025e+04 Fmax= 3.75530e+03, atom= 30985
+Step=   31, Dmax= 5.2e-03 nm, Epot= -2.34607e+04 Fmax= 3.67109e+03, atom= 30985
+Step=   32, Dmax= 6.2e-03 nm, Epot= -2.35805e+04 Fmax= 6.35822e+03, atom= 30985
+Step=   33, Dmax= 7.5e-03 nm, Epot= -2.37644e+04 Fmax= 4.63188e+03, atom= 30985
+Step=   34, Dmax= 8.9e-03 nm, Epot= -2.37550e+04 Fmax= 9.61776e+03, atom= 30985Step=   35, Dmax= 4.5e-03 nm, Epot= -2.39342e+04 Fmax= 2.47752e+03, atom= 30985
+Step=   36, Dmax= 5.4e-03 nm, Epot= -2.40925e+04 Fmax= 5.03479e+03, atom= 30985
+Step=   37, Dmax= 6.4e-03 nm, Epot= -2.42350e+04 Fmax= 5.15348e+03, atom= 30985
+Step=   38, Dmax= 7.7e-03 nm, Epot= -2.43332e+04 Fmax= 6.18399e+03, atom= 30985
+Step=   39, Dmax= 9.3e-03 nm, Epot= -2.43919e+04 Fmax= 8.36799e+03, atom= 30985
+Step=   40, Dmax= 1.1e-02 nm, Epot= -2.45089e+04 Fmax= 8.19949e+03, atom= 30985
+Step=   41, Dmax= 1.3e-02 nm, Epot= -2.43802e+04 Fmax= 1.25801e+04, atom= 30985Step=   42, Dmax= 6.7e-03 nm, Epot= -2.48120e+04 Fmax= 2.15555e+03, atom= 30985
+Step=   43, Dmax= 8.0e-03 nm, Epot= -2.48743e+04 Fmax= 9.06156e+03, atom= 30985
+Step=   44, Dmax= 9.6e-03 nm, Epot= -2.51515e+04 Fmax= 5.82522e+03, atom= 30985
+Step=   45, Dmax= 1.2e-02 nm, Epot= -2.49840e+04 Fmax= 1.12157e+04, atom= 30985Step=   46, Dmax= 5.8e-03 nm, Epot= -2.53191e+04 Fmax= 2.73001e+03, atom= 30985
+Step=   47, Dmax= 6.9e-03 nm, Epot= -2.53304e+04 Fmax= 8.42705e+03, atom= 30985
+Step=   48, Dmax= 8.3e-03 nm, Epot= -2.55874e+04 Fmax= 4.00920e+03, atom= 30985
+Step=   49, Dmax= 1.0e-02 nm, Epot= -2.53931e+04 Fmax= 1.17632e+04, atom= 30985Step=   50, Dmax= 5.0e-03 nm, Epot= -2.57000e+04 Fmax= 3.85375e+03, atom= 30985
+Step=   51, Dmax= 6.0e-03 nm, Epot= -2.57849e+04 Fmax= 4.90473e+03, atom= 30985
+Step=   52, Dmax= 7.2e-03 nm, Epot= -2.58568e+04 Fmax= 6.33844e+03, atom= 30985
+Step=   53, Dmax= 8.6e-03 nm, Epot= -2.59439e+04 Fmax= 6.47357e+03, atom= 30985
+Step=   54, Dmax= 1.0e-02 nm, Epot= -2.59115e+04 Fmax= 9.59407e+03, atom= 30985Step=   55, Dmax= 5.2e-03 nm, Epot= -2.61459e+04 Fmax= 1.53867e+03, atom= 30985
+Step=   56, Dmax= 6.2e-03 nm, Epot= -2.62767e+04 Fmax= 7.06738e+03, atom= 30985
+Step=   57, Dmax= 7.4e-03 nm, Epot= -2.64662e+04 Fmax= 4.45118e+03, atom= 30985
+Step=   58, Dmax= 8.9e-03 nm, Epot= -2.64032e+04 Fmax= 8.72807e+03, atom= 30985Step=   59, Dmax= 4.5e-03 nm, Epot= -2.65838e+04 Fmax= 2.15976e+03, atom= 30985
+Step=   60, Dmax= 5.4e-03 nm, Epot= -2.66403e+04 Fmax= 6.46377e+03, atom= 30985
+Step=   61, Dmax= 6.4e-03 nm, Epot= -2.68090e+04 Fmax= 3.14642e+03, atom= 30985
+Step=   62, Dmax= 7.7e-03 nm, Epot= -2.67427e+04 Fmax= 9.05348e+03, atom= 30985Step=   63, Dmax= 3.9e-03 nm, Epot= -2.69024e+04 Fmax= 2.93977e+03, atom= 30985
+Step=   64, Dmax= 4.6e-03 nm, Epot= -2.69828e+04 Fmax= 3.82155e+03, atom= 30985
+Step=   65, Dmax= 5.6e-03 nm, Epot= -2.70549e+04 Fmax= 4.88217e+03, atom= 30985
+Step=   66, Dmax= 6.7e-03 nm, Epot= -2.71318e+04 Fmax= 5.01942e+03, atom= 30985
+Step=   67, Dmax= 8.0e-03 nm, Epot= -2.71432e+04 Fmax= 7.42124e+03, atom= 30985
+Step=   68, Dmax= 9.6e-03 nm, Epot= -2.72372e+04 Fmax= 6.94745e+03, atom= 30985
+Step=   69, Dmax= 1.2e-02 nm, Epot= -2.71195e+04 Fmax= 1.08480e+04, atom= 30985Step=   70, Dmax= 5.8e-03 nm, Epot= -2.74481e+04 Fmax= 1.92166e+03, atom= 30985
+Step=   71, Dmax= 6.9e-03 nm, Epot= -2.74553e+04 Fmax= 7.99528e+03, atom= 30985
+Step=   72, Dmax= 8.3e-03 nm, Epot= -2.76710e+04 Fmax= 4.76060e+03, atom= 30985
+Step=   73, Dmax= 1.0e-02 nm, Epot= -2.75127e+04 Fmax= 1.00094e+04, atom= 30985Step=   74, Dmax= 5.0e-03 nm, Epot= -2.77839e+04 Fmax= 2.65013e+03, atom= 30985
+Step=   75, Dmax= 6.0e-03 nm, Epot= -2.77894e+04 Fmax= 6.77671e+03, atom= 30985
+Step=   76, Dmax= 7.2e-03 nm, Epot= -2.79492e+04 Fmax= 3.96495e+03, atom= 30985
+Step=   77, Dmax= 8.6e-03 nm, Epot= -2.78285e+04 Fmax= 9.44554e+03, atom= 30985Step=   78, Dmax= 4.3e-03 nm, Epot= -2.80456e+04 Fmax= 2.72299e+03, atom= 30985
+Step=   79, Dmax= 5.2e-03 nm, Epot= -2.80935e+04 Fmax= 4.83885e+03, atom= 30985
+Step=   80, Dmax= 6.2e-03 nm, Epot= -2.81761e+04 Fmax= 4.75111e+03, atom= 30985
+Step=   81, Dmax= 7.4e-03 nm, Epot= -2.81953e+04 Fmax= 6.30832e+03, atom= 30985
+Step=   82, Dmax= 8.9e-03 nm, Epot= -2.82282e+04 Fmax= 7.43616e+03, atom= 30985
+Step=   83, Dmax= 1.1e-02 nm, Epot= -2.82287e+04 Fmax= 8.59217e+03, atom= 30985
+Step=   84, Dmax= 1.3e-02 nm, Epot= -2.81446e+04 Fmax= 1.11113e+04, atom= 30985Step=   85, Dmax= 6.4e-03 nm, Epot= -2.85361e+04 Fmax= 1.22666e+03, atom= 30985
+Step=   86, Dmax= 7.7e-03 nm, Epot= -2.85224e+04 Fmax= 9.64227e+03, atom= 30985Step=   87, Dmax= 3.9e-03 nm, Epot= -2.86423e+04 Fmax= 4.21180e+03, atom= 30985
+Step=   88, Dmax= 4.6e-03 nm, Epot= -2.87395e+04 Fmax= 2.94885e+03, atom= 30985
+Step=   89, Dmax= 5.5e-03 nm, Epot= -2.87630e+04 Fmax= 5.23176e+03, atom= 30985
+Step=   90, Dmax= 6.7e-03 nm, Epot= -2.88438e+04 Fmax= 5.03988e+03, atom= 30985
+Step=   91, Dmax= 8.0e-03 nm, Epot= -2.88334e+04 Fmax= 6.88010e+03, atom= 30985Step=   92, Dmax= 4.0e-03 nm, Epot= -2.89756e+04 Fmax= 9.38590e+02, atom= 30985
+
+writing lowest energy coordinates.
+
+Steepest Descents converged to Fmax < 1000 in 93 steps
+Potential Energy  = -2.8975596e+04
+Maximum force     =  9.3859033e+02 on atom 30985
+Norm of force     =  4.5378807e+01
+
+GROMACS reminds you: "Why would I pay GitHub $100/year for an AI to tell me what code to write when men do it for free?" (Safia Abdalla)
+
+== nvt_heat
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi grompp -f nvt_heat.mdp -c em.gro -p system.top -o nvt_heat.tpr -maxwarn 5
+
+Setting the LD random seed to -22462553
+
+Generated 741 of the 741 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 741 of the 741 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'Li+'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'an'
+
+turning H bonds into constraints...
+
+Velocities were taken from a Maxwell distribution at 50 K
+Analysing residue names:
+There are:   924      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Simulated annealing for group System: Single, 2 timepoints
+Time (ps)   Temperature (K)
+      0.0       50.0
+    100.0-     298.1
+Number of degrees of freedom in T-Coupling group System is 77685.00
+
+The largest distance between excluded atoms is 0.403 nm between atom 30687 and 30688
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 298.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.218 nm, buffer size 0.018 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 72x72x72, spacing 0.113 0.113 0.113
+
+Estimate for the relative computational load of the PME mesh part: 0.33
+
+This run will generate roughly 2 Mb of data
+
+GROMACS reminds you: "Why would I pay GitHub $100/year for an AI to tell me what code to write when men do it for free?" (Safia Abdalla)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi mdrun -deffnm nvt_heat -ntomp 16 -nb gpu -bonded gpu -pme gpu -update gpu
+
+Reading file nvt_heat.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.292
+
+Update groups can not be used for this system because atoms that are (in)directly constrained together are interdispersed with other atoms
+
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 2 GPU tasks in the 1 rank on this node:
+  PP:0,PME:0
+PP tasks will do (non-perturbed) short-ranged and most bonded interactions on the GPU
+PP task will update and constrain coordinates on the GPU
+PME tasks will do all aspects on the GPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 16 OpenMP threads 
+
+starting mdrun 'el4f3bbcd28325 electrolyte'
+100000 steps,    100.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:      567.430       35.471     1599.7
+                 (ns/day)    (hour/ns)
+Performance:      243.584        0.099
+
+GROMACS reminds you: "Everybody has a plan until they get punched in the mouth" (Mike Tyson)
+
+== npt
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi grompp -f npt.mdp -c nvt_heat.gro -p system.top -o npt.tpr -maxwarn 5
+
+Setting the LD random seed to 1568665087
+
+Generated 741 of the 741 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 741 of the 741 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'Li+'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'an'
+
+turning H bonds into constraints...
+
+Taking velocities from 'nvt_heat.gro'
+Analysing residue names:
+There are:   924      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Number of degrees of freedom in T-Coupling group System is 77685.00
+
+The largest distance between excluded atoms is 0.421 nm between atom 761 and 765
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 298.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.223 nm, buffer size 0.023 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 72x72x72, spacing 0.113 0.113 0.113
+
+Estimate for the relative computational load of the PME mesh part: 0.33
+
+This run will generate roughly 6 Mb of data
+
+GROMACS reminds you: "Everybody has a plan until they get punched in the mouth" (Mike Tyson)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi mdrun -deffnm npt -ntomp 16 -nb gpu -bonded gpu -pme gpu -update gpu
+
+Reading file npt.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.312
+
+Update groups can not be used for this system because atoms that are (in)directly constrained together are interdispersed with other atoms
+
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 2 GPU tasks in the 1 rank on this node:
+  PP:0,PME:0
+PP tasks will do (non-perturbed) short-ranged and most bonded interactions on the GPU
+PP task will update and constrain coordinates on the GPU
+PME tasks will do all aspects on the GPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 16 OpenMP threads 
+
+starting mdrun 'el4f3bbcd28325 electrolyte'
+2000000 steps,   2000.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:    11745.273      734.086     1600.0
+                 (ns/day)    (hour/ns)
+Performance:      235.395        0.102
+
+GROMACS reminds you: "That Was Pretty Cool" (Beavis)
+
+== prod
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi grompp -f prod.mdp -c npt.gro -p system.top -o prod.tpr -maxwarn 5
+
+Setting the LD random seed to 2130698223
+
+Generated 741 of the 741 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 741 of the 741 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'Li+'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'an'
+
+turning H bonds into constraints...
+
+Taking velocities from 'npt.gro'
+Analysing residue names:
+There are:   924      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Number of degrees of freedom in T-Coupling group System is 77685.00
+
+The largest distance between excluded atoms is 0.424 nm between atom 29405 and 29409
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 298.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.227 nm, buffer size 0.027 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.202 nm, buffer size 0.002 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 60x60x60, spacing 0.118 0.118 0.118
+
+Estimate for the relative computational load of the PME mesh part: 0.22
+
+This run will generate roughly 127 Mb of data
+
+GROMACS reminds you: "That Was Pretty Cool" (Beavis)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325
+Command line:
+  gmx_mpi mdrun -deffnm prod -ntomp 16 -nb gpu -bonded gpu -pme gpu -update gpu
+
+Reading file prod.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+Changing nstlist from 20 to 100, rlist from 1.202 to 1.324
+
+Update groups can not be used for this system because atoms that are (in)directly constrained together are interdispersed with other atoms
+
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 2 GPU tasks in the 1 rank on this node:
+  PP:0,PME:0
+PP tasks will do (non-perturbed) short-ranged and most bonded interactions on the GPU
+PP task will update and constrain coordinates on the GPU
+PME tasks will do all aspects on the GPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 16 OpenMP threads 
+
+starting mdrun 'el4f3bbcd28325 electrolyte'
+4000000 steps,   4000.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:    23833.586     1489.607     1600.0
+                 (ns/day)    (hour/ns)
+Performance:      232.008        0.103
+
+GROMACS reminds you: "Three Little Fonzies" (Pulp Fiction)
+
+=== NPT density ===
+
+GROMACS reminds you: "Three Little Fonzies" (Pulp Fiction)
+
+=== Performance ===
+Performance:      232.008        0.103
+=== solvation analysis ===
+{
+  "n_li": 64,
+  "n_frames_used": 401,
+  "cn_solv_O": 3.646,
+  "cn_anion": 1.3093,
+  "ssip": 0.2281,
+  "cip": 0.6263,
+  "agg": 0.1455,
+  "rdf_LiO_peak_A": 2.11,
+  "anion_resnames": [
+    "fsi"
+  ],
+  "solvent_resnames": [
+    "SOL"
+  ],
+  "cation": "Li",
+  "anion": "FSI",
+  "shell_cutoff_A": 3.27,
+  "anion_donor_elements": [
+    "O",
+    "N"
+  ],
+  "n_anion_donor_atoms": 320,
+  "cn_solv_N": 0.5791,
+  "cn_total": 5.5345
+}
+-> /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el4f3bbcd28325/solvation.json
+end: Sat Sep 19 19:42:18 CDT 2026

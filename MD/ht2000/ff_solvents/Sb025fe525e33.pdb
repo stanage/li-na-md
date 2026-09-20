@@ -1,0 +1,78 @@
+REMARK LIGPARGEN GENERATED PDB FILE
+ATOM      1  C00 UNK     1       1.000   1.000   0.000
+ATOM      2  C01 UNK     1      -0.517   1.000   0.000
+ATOM      3  S02 UNK     1      -1.144   1.000   1.667
+ATOM      4  O03 UNK     1      -0.740  -0.243   2.296
+ATOM      5  O04 UNK     1      -0.787   2.282   2.244
+ATOM      6  C05 UNK     1      -2.919   0.944   1.447
+ATOM      7  C06 UNK     1      -3.682   0.825   2.767
+ATOM      8  C07 UNK     1      -3.500   2.045   3.679
+ATOM      9  C08 UNK     1      -4.314   1.949   4.965
+ATOM     10  O09 UNK     1      -5.716   1.883   4.684
+ATOM     11  C0A UNK     1      -6.317   3.079   4.421
+ATOM     12  O0B UNK     1      -5.741   4.159   4.414
+ATOM     13  C0C UNK     1      -7.805   2.882   4.136
+ATOM     14  C0D UNK     1      -8.484   2.297   5.381
+ATOM     15  C0E UNK     1      -8.436   4.242   3.803
+ATOM     16  C0F UNK     1      -7.976   1.938   2.938
+ATOM     17  H0G UNK     1       1.382   1.001  -1.022
+ATOM     18  H0H UNK     1       1.389   0.114   0.512
+ATOM     19  H0I UNK     1       1.394   1.882   0.518
+ATOM     20  H0J UNK     1      -0.903   0.112  -0.509
+ATOM     21  H0K UNK     1      -0.899   1.899  -0.495
+ATOM     22  H0M UNK     1      -3.128   0.063   0.828
+ATOM     23  H0N UNK     1      -3.219   1.839   0.893
+ATOM     24  H0O UNK     1      -3.364  -0.079   3.300
+ATOM     25  H0P UNK     1      -4.748   0.700   2.532
+ATOM     26  H0Q UNK     1      -3.782   2.943   3.118
+ATOM     27  H0R UNK     1      -2.455   2.146   3.973
+ATOM     28  H0S UNK     1      -4.091   2.792   5.629
+ATOM     29  H0T UNK     1      -4.045   1.037   5.510
+ATOM     30  H0U UNK     1      -8.346   2.953   6.248
+ATOM     31  H0V UNK     1      -8.067   1.319   5.645
+ATOM     32  H0W UNK     1      -9.561   2.170   5.221
+ATOM     33  H0X UNK     1      -8.324   4.945   4.637
+ATOM     34  H0Y UNK     1      -9.505   4.143   3.587
+ATOM     35  H0Z UNK     1      -7.954   4.697   2.929
+ATOM     36  H10 UNK     1      -7.561   0.945   3.143
+ATOM     37  H11 UNK     1      -7.458   2.328   2.054
+ATOM     38  H12 UNK     1      -9.034   1.808   2.686
+TER 
+CONECT    1    2 
+CONECT    2    3 
+CONECT    3    4 
+CONECT    3    5 
+CONECT    3    6 
+CONECT    6    7 
+CONECT    7    8 
+CONECT    8    9 
+CONECT    9   10 
+CONECT   10   11 
+CONECT   11   12 
+CONECT   11   13 
+CONECT   13   14 
+CONECT   13   15 
+CONECT   13   16 
+CONECT    1   17 
+CONECT    1   18 
+CONECT    1   19 
+CONECT    2   20 
+CONECT    2   21 
+CONECT    6   22 
+CONECT    6   23 
+CONECT    7   24 
+CONECT    7   25 
+CONECT    8   26 
+CONECT    8   27 
+CONECT    9   28 
+CONECT    9   29 
+CONECT   14   30 
+CONECT   14   31 
+CONECT   14   32 
+CONECT   15   33 
+CONECT   15   34 
+CONECT   15   35 
+CONECT   16   36 
+CONECT   16   37 
+CONECT   16   38 
+END

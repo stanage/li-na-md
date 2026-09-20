@@ -1,0 +1,15 @@
+10 unique solvents | 0 cached | 10 to fetch
+[   1/10] FAIL Sd093154384b7 CC(=O)OCC(C)(C)C(CC=O)C(=O)CC#N                      eta   1.6m  Sorry, an error has been detected in your input data (file, smile or selected ch
+[   2/10] FAIL S63edbe16228b CC(=O)C1C(C)C1C(=O)C(C)C(=O)C#N                      eta   0.7m  Sorry, an error has been detected in your input data (file, smile or selected ch
+[   3/10] FAIL S43cb09a11d9d CCCC(C)C(C=O)C(=O)C(C)(C#N)C=O                       eta   0.9m  Sorry, an error has been detected in your input data (file, smile or selected ch
+[   4/10] FAIL Sc52e4c8dac82 CC1C(C)(C)C(CC=O)CCC12CC2C#N                         eta   0.6m  Sorry, an error has been detected in your input data (file, smile or selected ch
+[   5/10] ok   S0d1b0909e56e CCCCC(C)C(CCCC(C)=O)CC(C)C                           eta   0.6m
+[   6/10] FAIL Sd76fa37f346f CCCC(C)CCN(CCS(=O)(=O)CC)CC(C)C                      eta   0.5m  Sorry, an error has been detected in your input data (file, smile or selected ch
+[   7/10] FAIL S6f57af5ef9ae CCCCCC1(C(CC)CCC#N)CCCCC1                            eta   0.4m  Sorry, an error has been detected in your input data (file, smile or selected ch
+[   8/10] FAIL Sd447855eeb23 CCOC(C)(C)CCC(C=O)COC(=O)OC                          eta   0.3m  Sorry, an error has been detected in your input data (file, smile or selected ch
+[   9/10] ok   Sd4d5a16a36b9 COC1(CC(C)CC(F)(F)F)C(C)C1CC=O                       eta   0.2m
+[  10/10] ok   S55f5f86d001d COC1C(=O)CC(CCC(C)C)OC(=O)OC1C                       eta   0.0m
+
+fetched 3, failed 7, in 1.4 min
+failures -> /project/chibueze/stanley/projects/li-na-md/MD/ht2000/index/ff_failures.csv
+manifest -> /project/chibueze/stanley/projects/li-na-md/MD/ht2000/index/solvent_manifest.csv

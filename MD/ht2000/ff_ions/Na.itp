@@ -1,0 +1,14 @@
+; Na -- ion parameters for the ht2000 campaign
+; assembled by build_ion_ff.py; charges UNSCALED (ECC scaling applied at run-build time)
+
+[ atomtypes ]
+;  name       at.nr   mass    charge  ptype  sigma(nm)   epsilon(kJ/mol)
+  Na            11   22.9900    1.0000  A  3.33000e-01 1.16000e-02
+
+[ moleculetype ]
+; name  nrexcl
+Na+   3
+
+[ atoms ]
+;  nr    type  resnr  residue  atom  cgnr    charge      mass
+    1  Na         1  na    Na       1    1.000000  22.9900

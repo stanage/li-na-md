@@ -1,0 +1,18 @@
+[start] el24383915d466 18:47:03
+[start] eldc002cdbd32f 18:47:03
+[start] el91a581a736c4 18:47:03
+environment: line 1: 3773400 Terminated              bash "$HT/scripts/run_md.sh" "$HT/runs/$key" > "$HT/logs/local_$key.log" 2>&1
+environment: line 1: 3773399 Terminated              bash "$HT/scripts/run_md.sh" "$HT/runs/$key" > "$HT/logs/local_$key.log" 2>&1
+environment: line 1: 3773401 Terminated              bash "$HT/scripts/run_md.sh" "$HT/runs/$key" > "$HT/logs/local_$key.log" 2>&1
+[FAIL]  eldc002cdbd32f rc=143 18:58:19 -- see logs/local_eldc002cdbd32f.log
+[FAIL]  el91a581a736c4 rc=143 18:58:19 -- see logs/local_el91a581a736c4.log
+[FAIL]  el24383915d466 rc=143 18:58:19 -- see logs/local_el24383915d466.log
+[start] elf753e45543b5 18:58:19
+[start] el42f379ba29d4 18:58:19
+[start] el98036f5496b5 18:58:19
+environment: line 1: 3775380 Terminated              bash "$HT/scripts/run_md.sh" "$HT/runs/$key" > "$HT/logs/local_$key.log" 2>&1
+environment: line 1: 3775367 Terminated              bash "$HT/scripts/run_md.sh" "$HT/runs/$key" > "$HT/logs/local_$key.log" 2>&1
+environment: line 1: 3775372 Terminated              bash "$HT/scripts/run_md.sh" "$HT/runs/$key" > "$HT/logs/local_$key.log" 2>&1
+[FAIL]  el98036f5496b5 rc=143 18:58:36 -- see logs/local_el98036f5496b5.log
+[FAIL]  elf753e45543b5 rc=143 18:58:36 -- see logs/local_elf753e45543b5.log
+[FAIL]  el42f379ba29d4 rc=143 18:58:36 -- see logs/local_el42f379ba29d4.log

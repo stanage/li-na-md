@@ -1,0 +1,14 @@
+; Li -- ion parameters for the ht2000 campaign
+; assembled by build_ion_ff.py; charges UNSCALED (ECC scaling applied at run-build time)
+
+[ atomtypes ]
+;  name       at.nr   mass    charge  ptype  sigma(nm)   epsilon(kJ/mol)
+  Li             3    6.9410    1.0000  A  2.12600e-01 7.64800e-02
+
+[ moleculetype ]
+; name  nrexcl
+Li+   3
+
+[ atoms ]
+;  nr    type  resnr  residue  atom  cgnr    charge      mass
+    1  Li         1  li    Li       1    1.000000  6.9410

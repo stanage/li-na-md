@@ -1,0 +1,200 @@
+{
+  "BF4": {
+    "charge_unscaled": -1.0,
+    "key": "BF4",
+    "n_atoms": 5,
+    "ok": true,
+    "pdb_atoms": 5,
+    "smiles": "[B-](F)(F)(F)F",
+    "source": "2009IL"
+  },
+  "BNZ": {
+    "charge_unscaled": -1.0,
+    "key": "BNZ",
+    "n_atoms": 14,
+    "ok": true,
+    "pdb_atoms": 14,
+    "smiles": "[O-]C(=O)c1ccccc1",
+    "source": "2009IL"
+  },
+  "Beti": {
+    "charge_unscaled": -1.0,
+    "key": "beti",
+    "n_atoms": 21,
+    "ok": true,
+    "pdb_atoms": 21,
+    "smiles": "[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F",
+    "source": "fftool"
+  },
+  "Br": {
+    "charge_unscaled": -1.0,
+    "key": "Br",
+    "n_atoms": 1,
+    "ok": true,
+    "pdb_atoms": 1,
+    "smiles": "[Br-]",
+    "source": "2009IL"
+  },
+  "Cl": {
+    "charge_unscaled": -1.0,
+    "key": "Cl",
+    "n_atoms": 1,
+    "ok": true,
+    "pdb_atoms": 1,
+    "smiles": "[Cl-]",
+    "source": "2009IL"
+  },
+  "ClO4": {
+    "charge_unscaled": -1.0,
+    "key": "ClO4",
+    "n_atoms": 5,
+    "ok": true,
+    "pdb_atoms": 5,
+    "smiles": "[O-]Cl(=O)(=O)=O",
+    "source": "2009IL"
+  },
+  "DCA": {
+    "charge_unscaled": -1.0,
+    "key": "DCA",
+    "n_atoms": 5,
+    "ok": true,
+    "pdb_atoms": 5,
+    "smiles": "[N-](C#N)C#N",
+    "source": "2009IL"
+  },
+  "FSI": {
+    "charge_unscaled": -1.0,
+    "key": "an",
+    "n_atoms": 9,
+    "ok": true,
+    "pdb_atoms": 9,
+    "smiles": "[N-](S(=O)(=O)F)S(=O)(=O)F",
+    "source": "oldrun"
+  },
+  "HCOO": {
+    "charge_unscaled": -1.0,
+    "key": "HCOO",
+    "n_atoms": 4,
+    "ok": true,
+    "pdb_atoms": 4,
+    "smiles": "[O-]C=O",
+    "source": "2009IL"
+  },
+  "Li": {
+    "charge_unscaled": 1.0,
+    "key": "Li",
+    "n_atoms": 1,
+    "ok": true,
+    "pdb_atoms": 1,
+    "smiles": "[Li+]",
+    "source": "builtin"
+  },
+  "MS": {
+    "charge_unscaled": -1.0,
+    "key": "MS",
+    "n_atoms": 9,
+    "ok": true,
+    "pdb_atoms": 9,
+    "smiles": "COS(=O)(=O)[O-]",
+    "source": "2009IL"
+  },
+  "NO3": {
+    "charge_unscaled": -1.0,
+    "key": "NO3",
+    "n_atoms": 4,
+    "ok": true,
+    "pdb_atoms": 4,
+    "smiles": "[O-][N+](=O)[O-]",
+    "source": "2009IL"
+  },
+  "Na": {
+    "charge_unscaled": 1.0,
+    "key": "Na",
+    "n_atoms": 1,
+    "ok": true,
+    "pdb_atoms": 1,
+    "smiles": "[Na+]",
+    "source": "builtin"
+  },
+  "OAc": {
+    "charge_unscaled": -1.0,
+    "key": "ACE",
+    "n_atoms": 7,
+    "ok": true,
+    "pdb_atoms": 7,
+    "smiles": "CC(=O)[O-]",
+    "source": "2009IL"
+  },
+  "OTf": {
+    "charge_unscaled": -1.0,
+    "key": "TFO",
+    "n_atoms": 8,
+    "ok": true,
+    "pdb_atoms": 8,
+    "smiles": "[O-]S(=O)(=O)C(F)(F)F",
+    "source": "2009IL"
+  },
+  "OTs": {
+    "charge_unscaled": -0.9999,
+    "key": "[O-]S(=O)(=O)c1ccc(C)cc1",
+    "n_atoms": 18,
+    "ok": true,
+    "pdb_atoms": 18,
+    "smiles": "[O-]S(=O)(=O)c1ccc(C)cc1",
+    "source": "ligpargen"
+  },
+  "PF6": {
+    "charge_unscaled": -1.0,
+    "key": "PF6",
+    "n_atoms": 7,
+    "ok": true,
+    "pdb_atoms": 7,
+    "smiles": "F[P-](F)(F)(F)(F)F",
+    "source": "2009IL"
+  },
+  "PROP": {
+    "charge_unscaled": -1.0,
+    "key": "PROP",
+    "n_atoms": 10,
+    "ok": true,
+    "pdb_atoms": 10,
+    "smiles": "CCC(=O)[O-]",
+    "source": "2009IL"
+  },
+  "SCN": {
+    "charge_unscaled": -1.0,
+    "key": "SCN",
+    "n_atoms": 3,
+    "ok": true,
+    "pdb_atoms": 3,
+    "smiles": "[S-]C#N",
+    "source": "2009IL"
+  },
+  "TCM": {
+    "charge_unscaled": -1.0,
+    "key": "TCM",
+    "n_atoms": 7,
+    "ok": true,
+    "pdb_atoms": 7,
+    "smiles": "[C-](C#N)(C#N)C#N",
+    "source": "2009IL"
+  },
+  "TFA": {
+    "charge_unscaled": -1.0,
+    "key": "tfa",
+    "n_atoms": 7,
+    "ok": true,
+    "pdb_atoms": 7,
+    "smiles": "[O-]C(=O)C(F)(F)F",
+    "source": "fftool"
+  },
+  "TFSI": {
+    "charge_unscaled": -1.0,
+    "key": "NTF2",
+    "n_atoms": 15,
+    "ok": true,
+    "pdb_atoms": 15,
+    "smiles": "[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F",
+    "source": "2009IL"
+  }
+}

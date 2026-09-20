@@ -1,0 +1,45 @@
+; PF6 -- ion parameters for the ht2000 campaign
+; assembled by build_ion_ff.py; charges UNSCALED (ECC scaling applied at run-build time)
+
+[ atomtypes ]
+;  name       at.nr   mass    charge  ptype  sigma(nm)   epsilon(kJ/mol)
+  an_P             15   30.9740    1.3400  A  3.74000e-01 8.37000e-01
+  an_F              9   18.9980   -0.3900  A  3.11810e-01 2.55220e-01
+
+[ moleculetype ]
+; name  nrexcl
+an   3
+
+[ atoms ]
+;  nr    type  resnr  residue  atom  cgnr    charge      mass
+    1  an_P          1  pf6   P        1    1.340000  30.974
+    2  an_F          1  pf6   F        1   -0.390000  18.998
+    3  an_F          1  pf6   F        1   -0.390000  18.998
+    4  an_F          1  pf6   F        1   -0.390000  18.998
+    5  an_F          1  pf6   F        1   -0.390000  18.998
+    6  an_F          1  pf6   F        1   -0.390000  18.998
+    7  an_F          1  pf6   F        1   -0.390000  18.998
+
+[ bonds ]
+;   ai   aj funct  c0(nm)   c1(kJ mol-1 nm-2) ro(Ang.) kr(kcal mol-1 Ang.-2)
+1    2    1    0.1606    310000    ;    1.606    370.46    P-F
+1    3    1    0.1606    310000    ;    1.606    370.46    P-F
+1    4    1    0.1606    310000    ;    1.606    370.46    P-F
+1    5    1    0.1606    310000    ;    1.606    370.46    P-F
+1    6    1    0.1606    310000    ;    1.606    370.46    P-F
+1    7    1    0.1606    310000    ;    1.606    370.46    P-F
+
+[ angles ]
+;   ai   aj   ak funct c0(deg) c1(kJ mol-1 rad-2) c0(deg)  c1(kcal mol-1 rad-2)
+2    1    3    1    90    1165    ;    90    139.22    F-P-F
+2    1    4    1    90    1165    ;    90    139.22    F-P-F
+2    1    6    1    90    1165    ;    90    139.22    F-P-F
+2    1    7    1    90    1165    ;    90    139.22    F-P-F
+3    1    4    1    90    1165    ;    90    139.22    F-P-F
+3    1    5    1    90    1165    ;    90    139.22    F-P-F
+3    1    7    1    90    1165    ;    90    139.22    F-P-F
+4    1    5    1    90    1165    ;    90    139.22    F-P-F
+4    1    6    1    90    1165    ;    90    139.22    F-P-F
+5    1    6    1    90    1165    ;    90    139.22    F-P-F
+5    1    7    1    90    1165    ;    90    139.22    F-P-F
+6    1    7    1    90    1165    ;    90    139.22    F-P-F

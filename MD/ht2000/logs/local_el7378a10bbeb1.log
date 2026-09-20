@@ -1,0 +1,396 @@
+run:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+node: midway3-0281.rcc.local  GPU: Tesla V100-PCIE-16GB
+start: Sat Sep 19 18:44:56 CDT 2026
+== em
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi grompp -f em.mdp -c mixture.gro -p system.top -o em.tpr -maxwarn 5
+
+Setting the LD random seed to 1878540255
+
+Generated 861 of the 861 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 861 of the 861 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+Excluding 3 bonded neighbours molecule type 'Na+'
+
+Excluding 3 bonded neighbours molecule type 'an'
+Analysing residue names:
+There are:    54      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Number of degrees of freedom in T-Coupling group rest is 7749.00
+The integrator does not provide a ensemble temperature, there is no system ensemble temperature
+
+The largest distance between excluded atoms is 0.400 nm between atom 1877 and 1886
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 32x32x32, spacing 0.118 0.118 0.118
+
+Estimate for the relative computational load of the PME mesh part: 0.31
+
+This run will generate roughly 0 Mb of data
+
+GROMACS reminds you: "Martin [Karplus] had a green laser, Arieh [Warshel] had a red laser, I have a *blue* laser" (Michael Levitt, Nobel lecture 2013)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi mdrun -deffnm em -ntomp 8 -nb gpu -bonded cpu -pme cpu -v
+
+Reading file em.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 1 GPU task in the 1 rank on this node:
+  PP:0
+PP tasks will do (non-perturbed) short-ranged interactions on the GPU
+PP task will update and constrain coordinates on the CPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 8 OpenMP threads 
+
+
+Steepest Descents:
+   Tolerance (Fmax)   =  1.00000e+03
+   Number of steps    =         5000
+Step=    0, Dmax= 1.0e-02 nm, Epot=  1.15853e+03 Fmax= 5.43236e+03, atom= 2104
+Step=    1, Dmax= 1.0e-02 nm, Epot= -3.78540e+03 Fmax= 4.43368e+03, atom= 2172
+Step=    2, Dmax= 1.2e-02 nm, Epot= -3.78721e+03 Fmax= 1.42006e+04, atom= 2172
+Step=    3, Dmax= 1.4e-02 nm, Epot= -7.26102e+03 Fmax= 5.87226e+03, atom= 2271
+Step=    4, Dmax= 1.7e-02 nm, Epot= -5.15716e+03 Fmax= 2.05168e+04, atom= 2271Step=    5, Dmax= 8.6e-03 nm, Epot= -7.75682e+03 Fmax= 7.48117e+03, atom= 2271
+Step=    6, Dmax= 1.0e-02 nm, Epot= -8.13764e+03 Fmax= 7.88880e+03, atom= 2271
+Step=    7, Dmax= 1.2e-02 nm, Epot= -8.09583e+03 Fmax= 1.10343e+04, atom= 2271Step=    8, Dmax= 6.2e-03 nm, Epot= -8.83021e+03 Fmax= 1.67965e+03, atom= 2271
+Step=    9, Dmax= 7.5e-03 nm, Epot= -9.18476e+03 Fmax= 8.71145e+03, atom= 2271
+Step=   10, Dmax= 9.0e-03 nm, Epot= -9.74023e+03 Fmax= 4.82996e+03, atom= 2271
+Step=   11, Dmax= 1.1e-02 nm, Epot= -9.12040e+03 Fmax= 1.14618e+04, atom= 2271Step=   12, Dmax= 5.4e-03 nm, Epot= -9.97766e+03 Fmax= 3.36666e+03, atom= 2271
+Step=   13, Dmax= 6.4e-03 nm, Epot= -9.95022e+03 Fmax= 6.26350e+03, atom= 2271Step=   14, Dmax= 3.2e-03 nm, Epot= -1.01591e+04 Fmax= 1.50636e+03, atom= 2271
+Step=   15, Dmax= 3.9e-03 nm, Epot= -1.02832e+04 Fmax= 4.38529e+03, atom= 2271
+Step=   16, Dmax= 4.6e-03 nm, Epot= -1.04781e+04 Fmax= 2.57727e+03, atom= 2271
+Step=   17, Dmax= 5.6e-03 nm, Epot= -1.04011e+04 Fmax= 6.02115e+03, atom= 2271Step=   18, Dmax= 2.8e-03 nm, Epot= -1.06036e+04 Fmax= 1.76840e+03, atom= 2271
+Step=   19, Dmax= 3.3e-03 nm, Epot= -1.06876e+04 Fmax= 3.07478e+03, atom= 2019
+Step=   20, Dmax= 4.0e-03 nm, Epot= -1.07829e+04 Fmax= 3.14983e+03, atom= 2271
+Step=   21, Dmax= 4.8e-03 nm, Epot= -1.08191e+04 Fmax= 4.26583e+03, atom= 2019
+Step=   22, Dmax= 5.8e-03 nm, Epot= -1.08839e+04 Fmax= 4.65029e+03, atom= 2019
+Step=   23, Dmax= 6.9e-03 nm, Epot= -1.08659e+04 Fmax= 6.09562e+03, atom= 2019Step=   24, Dmax= 3.5e-03 nm, Epot= -1.10985e+04 Fmax= 1.09361e+03, atom= 2007
+Step=   25, Dmax= 4.2e-03 nm, Epot= -1.12432e+04 Fmax= 3.48128e+03, atom= 2019
+Step=   26, Dmax= 5.0e-03 nm, Epot= -1.12855e+04 Fmax= 4.23191e+03, atom= 2019
+Step=   27, Dmax= 6.0e-03 nm, Epot= -1.13182e+04 Fmax= 5.04156e+03, atom= 2019
+Step=   28, Dmax= 7.2e-03 nm, Epot= -1.13316e+04 Fmax= 6.05451e+03, atom= 2019
+Step=   29, Dmax= 8.6e-03 nm, Epot= -1.13227e+04 Fmax= 7.28874e+03, atom= 2019Step=   30, Dmax= 4.3e-03 nm, Epot= -1.15538e+04 Fmax= 1.02832e+03, atom= 2007
+Step=   31, Dmax= 5.2e-03 nm, Epot= -1.17048e+04 Fmax= 4.20417e+03, atom= 2019
+Step=   32, Dmax= 6.2e-03 nm, Epot= -1.17241e+04 Fmax= 5.40838e+03, atom= 2019
+Step=   33, Dmax= 7.5e-03 nm, Epot= -1.17534e+04 Fmax= 6.06332e+03, atom= 2019
+Step=   34, Dmax= 8.9e-03 nm, Epot= -1.17357e+04 Fmax= 7.76502e+03, atom= 2019Step=   35, Dmax= 4.5e-03 nm, Epot= -1.19040e+04 Fmax= 9.75912e+02, atom= 2007
+
+writing lowest energy coordinates.
+
+Steepest Descents converged to Fmax < 1000 in 36 steps
+Potential Energy  = -1.1903964e+04
+Maximum force     =  9.7591187e+02 on atom 2007
+Norm of force     =  1.2802226e+02
+
+GROMACS reminds you: "If Java had true garbage collection, most programs would delete themselves upon execution." (Robert Sewell)
+
+== nvt_heat
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi grompp -f nvt_heat.mdp -c em.gro -p system.top -o nvt_heat.tpr -maxwarn 5
+
+Setting the LD random seed to 1803525060
+
+Generated 861 of the 861 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 861 of the 861 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'Na+'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'an'
+
+turning H bonds into constraints...
+
+Velocities were taken from a Maxwell distribution at 50 K
+Analysing residue names:
+There are:    54      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Simulated annealing for group System: Single, 2 timepoints
+Time (ps)   Temperature (K)
+      0.0       50.0
+    100.0-     298.1
+Number of degrees of freedom in T-Coupling group System is 6723.00
+
+The largest distance between excluded atoms is 0.403 nm between atom 1841 and 1850
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 298.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.213 nm, buffer size 0.013 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 32x32x32, spacing 0.118 0.118 0.118
+
+Estimate for the relative computational load of the PME mesh part: 0.34
+
+This run will generate roughly 0 Mb of data
+
+GROMACS reminds you: "If Java had true garbage collection, most programs would delete themselves upon execution." (Robert Sewell)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi mdrun -deffnm nvt_heat -ntomp 8 -nb gpu -bonded gpu -pme gpu -update gpu
+
+Reading file nvt_heat.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.268
+
+Update groups can not be used for this system because atoms that are (in)directly constrained together are interdispersed with other atoms
+
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 2 GPU tasks in the 1 rank on this node:
+  PP:0,PME:0
+PP tasks will do (non-perturbed) short-ranged and most bonded interactions on the GPU
+PP task will update and constrain coordinates on the GPU
+PME tasks will do all aspects on the GPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 8 OpenMP threads 
+
+starting mdrun 'el7378a10bbeb1 electrolyte'
+100000 steps,    100.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:       84.428       10.556      799.8
+                 (ns/day)    (hour/ns)
+Performance:      818.465        0.029
+
+GROMACS reminds you: "A ship in port is safe, but that is not what ships are for. Sail out to sea and do new things." (Grace Hopper, developer of COBOL)
+
+== npt
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi grompp -f npt.mdp -c nvt_heat.gro -p system.top -o npt.tpr -maxwarn 5
+
+Setting the LD random seed to -675711113
+
+Generated 861 of the 861 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 861 of the 861 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'Na+'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'an'
+
+turning H bonds into constraints...
+
+Taking velocities from 'nvt_heat.gro'
+Analysing residue names:
+There are:    54      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Number of degrees of freedom in T-Coupling group System is 6723.00
+
+The largest distance between excluded atoms is 0.415 nm between atom 1337 and 1346
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 298.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.216 nm, buffer size 0.016 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.200 nm, buffer size 0.000 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 32x32x32, spacing 0.118 0.118 0.118
+
+Estimate for the relative computational load of the PME mesh part: 0.34
+
+This run will generate roughly 4 Mb of data
+
+GROMACS reminds you: "A ship in port is safe, but that is not what ships are for. Sail out to sea and do new things." (Grace Hopper, developer of COBOL)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi mdrun -deffnm npt -ntomp 8 -nb gpu -bonded gpu -pme gpu -update gpu
+
+Reading file npt.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+Changing nstlist from 20 to 100, rlist from 1.2 to 1.281
+
+Update groups can not be used for this system because atoms that are (in)directly constrained together are interdispersed with other atoms
+
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 2 GPU tasks in the 1 rank on this node:
+  PP:0,PME:0
+PP tasks will do (non-perturbed) short-ranged and most bonded interactions on the GPU
+PP task will update and constrain coordinates on the GPU
+PME tasks will do all aspects on the GPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 8 OpenMP threads 
+
+starting mdrun 'el7378a10bbeb1 electrolyte'
+2000000 steps,   2000.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:     4934.149      616.772      800.0
+                 (ns/day)    (hour/ns)
+Performance:      280.169        0.086
+
+GROMACS reminds you: "Disturb the Peace of a John Q Citizen" (Urban Dance Squad)
+
+== prod
+   :-) GROMACS - gmx grompp, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi grompp -f prod.mdp -c npt.gro -p system.top -o prod.tpr -maxwarn 5
+
+Setting the LD random seed to -583009686
+
+Generated 861 of the 861 non-bonded parameter combinations
+Generating 1-4 interactions: fudge = 0.5
+
+Generated 861 of the 861 1-4 parameter combinations
+
+Excluding 3 bonded neighbours molecule type 'sol1'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'Na+'
+
+turning H bonds into constraints...
+
+Excluding 3 bonded neighbours molecule type 'an'
+
+turning H bonds into constraints...
+
+Taking velocities from 'npt.gro'
+Analysing residue names:
+There are:    54      Water residues
+There are:   128      Other residues
+Analysing residues not classified as Protein/DNA/RNA/Water and splitting into groups...
+Number of degrees of freedom in T-Coupling group System is 6723.00
+
+The largest distance between excluded atoms is 0.421 nm between atom 545 and 554
+
+Determining Verlet buffer for a tolerance of 0.005 kJ/mol/ps at 298.15 K
+
+Calculated rlist for 1x1 atom pair-list as 1.223 nm, buffer size 0.023 nm
+
+Set rlist, assuming 4x4 atom pair-list, to 1.202 nm, buffer size 0.002 nm
+
+Note that mdrun will redetermine rlist based on the actual pair-list setup
+Calculating fourier grid dimensions for X Y Z
+Using a fourier grid of 28x28x28, spacing 0.112 0.112 0.112
+
+Estimate for the relative computational load of the PME mesh part: 0.23
+
+This run will generate roughly 16 Mb of data
+
+GROMACS reminds you: "Disturb the Peace of a John Q Citizen" (Urban Dance Squad)
+
+   :-) GROMACS - gmx mdrun, 2025.3-dev-20250918-6130fef144-dirty-unknown (-:
+
+Executable:   /software/gromacs-2025.3-el8-x86_64/bin/gmx_mpi
+Data prefix:  /software/gromacs-2025.3-el8-x86_64
+Working dir:  /project/chibueze/stanley/projects/li-na-md/MD/ht2000/runs/el7378a10bbeb1
+Command line:
+  gmx_mpi mdrun -deffnm prod -ntomp 8 -nb gpu -bonded gpu -pme gpu -update gpu
+
+Reading file prod.tpr, VERSION 2025.3-dev-20250918-6130fef144-dirty-unknown (single precision)
+Changing nstlist from 20 to 100, rlist from 1.202 to 1.311
+
+Update groups can not be used for this system because atoms that are (in)directly constrained together are interdispersed with other atoms
+
+GPU-aware MPI was not detected, will not use direct GPU communication. Check the GROMACS install guide for recommendations for GPU-aware support. If you are certain about GPU-aware support in your MPI library, you can force its use by setting the GMX_FORCE_GPU_AWARE_MPI environment variable.
+
+1 GPU selected for this run.
+Mapping of GPU IDs to the 2 GPU tasks in the 1 rank on this node:
+  PP:0,PME:0
+PP tasks will do (non-perturbed) short-ranged and most bonded interactions on the GPU
+PP task will update and constrain coordinates on the GPU
+PME tasks will do all aspects on the GPU
+Using 1 MPI process
+
+Non-default thread affinity set, disabling internal thread affinity
+
+Using 8 OpenMP threads 
+
+starting mdrun 'el7378a10bbeb1 electrolyte'
+4000000 steps,   4000.0 ps.
+
+Writing final coordinates.
+
+               Core t (s)   Wall t (s)        (%)
+       Time:     4282.216      535.279      800.0
+                 (ns/day)    (hour/ns)
+Performance:      645.644        0.037
+
+GROMACS reminds you: "A computer once beat me at chess, but it was no match for me at kick boxing." (Emo Philips)
+
+=== NPT density ===
+
+GROMACS reminds you: "A computer once beat me at chess, but it was no match for me at kick boxing." (Emo Philips)
+
+=== Performance ===
+Performance:      645.644        0.037
+=== solvation analysis ===
+scripts/run_md.sh: line 66: cd: scripts: No such file or directory
+/scratch/midway3/eshiemogie/moleng/bin/python: can't open file '/analyze_solvation.py': [Errno 2] No such file or directory
+solvation analysis FAILED
+end: Sat Sep 19 19:04:23 CDT 2026
