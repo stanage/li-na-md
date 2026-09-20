@@ -59,6 +59,7 @@ Per formulation, produce the same artifacts the old campaign produced:
 |---|---|
 | `prod.xtc` + `prod.tpr` | 4 ns production trajectory |
 | `solvation.json` | CN to solvent O, CN to anion, SSIP/CIP/AGG fractions, RDF first peak |
+| `clusters.json` | ion-cluster count/size from the cation-anion RDF cutoff, free-ion and percolation fractions |
 | `summary.json` | formulation spec + counts + box + atom count |
 | `density.xvg` | NPT-average density |
 
@@ -395,7 +396,9 @@ MD/ht2000/
 │   ├── run_md.sh             ← the 4-stage GROMACS protocol; stage-resumable
 │   ├── launch_batch.py       ← build + submit (individually or as a job array)
 │   ├── analyze_solvation.py  ← reproduce solvation.json from prod.xtc
-│   └── collect_results.py    ← gather all summary/solvation json → results table
+│   ├── cluster_analysis.py   ← ion clusters from prod.xtc (own cation-anion cutoff)
+│   ├── build_run_manifest.py ← index all 2000 rows up front (key, composition, stage)
+│   └── collect_results.py    ← gather all summary/solvation/cluster json → results table
 ├── ff_solvents/  S<hash>.{itp,gro,pdb,smi}
 ├── ff_ions/      Li.itp Na.itp <ANION>.itp/.pdb + ions_manifest.json
 ├── runs/         el<hash>/ ... (one dir per formulation, mirrors old layout)

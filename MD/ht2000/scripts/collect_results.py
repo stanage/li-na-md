@@ -170,6 +170,29 @@ def main() -> int:
                 })
             except json.JSONDecodeError:
                 pass
+
+        cj = d / "clusters.json"
+        if cj.exists():
+            try:
+                v = json.loads(cj.read_text())
+                row.update({
+                    "clust_cutoff_A": v.get("cutoff_A"),
+                    "rdf_cat_an_peak_A": v.get("rdf_cation_anion_peak_A"),
+                    # two conventions, differing by whether lone ions count:
+                    # n_components is OVITO's, n_clusters is aggregates only
+                    "n_components": v.get("n_components"),
+                    "n_components_sd": v.get("n_components_sd"),
+                    "n_clusters": v.get("n_clusters"),
+                    "n_clusters_sd": v.get("n_clusters_sd"),
+                    "free_cation_frac": v.get("free_cation_frac"),
+                    "mean_cluster_size": v.get("mean_cluster_size"),
+                    "max_cluster_size": v.get("max_cluster_size"),
+                    "largest_cluster_frac": v.get("largest_cluster_frac"),
+                    "percolating_frac": v.get("percolating_frac"),
+                    "mean_cluster_charge": v.get("mean_cluster_charge"),
+                })
+            except json.JSONDecodeError:
+                pass
         rows.append(row)
 
     if not rows:
@@ -187,9 +210,16 @@ def main() -> int:
     print(f"\nwith solvation analysis: {len(done)}")
     if len(done):
         cols = ["key", "cation", "anion", "molarity", "molarity_actual",
-                "molarity_err_pct", "solv_per_ion_pair", "density_g_cm3",
-                "cn_solv_O", "cn_anion", "ssip", "cip", "agg"]
+                "solv_per_ion_pair", "density_g_cm3", "cn_solv_O", "cn_anion",
+                "ssip", "cip", "agg", "clust_cutoff_A", "n_components",
+                "n_clusters", "largest_cluster_frac"]
         print(done[[c for c in cols if c in done]].to_string(index=False))
+
+    if "percolating_frac" in df and df.percolating_frac.notna().any():
+        perc = df[df.percolating_frac > 0.5]
+        print(f"\nclustering: {df.percolating_frac.notna().sum()} run(s) analysed, "
+              f"{len(perc)} percolated (one network spanning >50% of the ions; "
+              f"n_clusters is not meaningful for those)")
 
     drift = df["molarity_err_pct"].abs() if "molarity_err_pct" in df else None
     if drift is not None and drift.notna().any():

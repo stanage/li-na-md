@@ -68,10 +68,17 @@ echo Density | $GMX energy -f npt.edr -o density.xvg 2>&1 | tail -3
 echo "=== Performance ==="
 grep Performance prod.log
 
-echo "=== solvation analysis ==="
 PYBIN=/scratch/midway3/eshiemogie/moleng/bin/python
+
+echo "=== solvation analysis ==="
 "$PYBIN" "$SCRIPTS/analyze_solvation.py" --run-dir "$RUNDIR" \
     || echo "solvation analysis FAILED"
+
+# Ion clustering is a separate pass because it uses its own cutoff: the first
+# minimum of the cation-ANION rdf, not the cation-solvent-O one above.
+echo "=== ion cluster analysis ==="
+"$PYBIN" "$SCRIPTS/cluster_analysis.py" --run-dir "$RUNDIR" \
+    || echo "cluster analysis FAILED"
 
 echo "end: $(date)"
 exit 0
