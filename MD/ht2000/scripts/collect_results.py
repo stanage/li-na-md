@@ -166,6 +166,10 @@ def main() -> int:
                     "agg": v.get("agg"),
                     "rdf_MO_peak_A": v.get("rdf_LiO_peak_A"),
                     "shell_cutoff_A": v.get("shell_cutoff_A"),
+                    # False = the RDF minimum was unresolvable and a hardcoded
+                    # radius was used instead; without this the two are
+                    # indistinguishable in the table
+                    "shell_cutoff_from_rdf": v.get("shell_cutoff_from_rdf"),
                     "n_frames_used": v.get("n_frames_used"),
                 })
             except json.JSONDecodeError:
@@ -177,6 +181,7 @@ def main() -> int:
                 v = json.loads(cj.read_text())
                 row.update({
                     "clust_cutoff_A": v.get("cutoff_A"),
+                    "clust_cutoff_from_rdf": v.get("cutoff_from_rdf"),
                     "rdf_cat_an_peak_A": v.get("rdf_cation_anion_peak_A"),
                     # two conventions, differing by whether lone ions count:
                     # n_components is OVITO's, n_clusters is aggregates only
@@ -195,15 +200,19 @@ def main() -> int:
                 pass
         rows.append(row)
 
+    # Returning here would leave a stale results.csv on disk describing runs
+    # that no longer exist, with no indication it is out of date. Write the
+    # empty table instead, so the file always reflects runs/ as it is now.
     if not rows:
-        print("no runs found")
-        return 0
-
+        print("no runs found -- writing an empty table")
     df = pd.DataFrame(rows)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(args.out, index=False)
 
     print(f"{len(df)} runs")
+    if df.empty:
+        print(f"-> {args.out}")
+        return 0
     print("\nstage reached:")
     print(df.stage.value_counts().to_string())
     done = df[df.get("cn_solv_O").notna()] if "cn_solv_O" in df else df.iloc[:0]
@@ -221,7 +230,18 @@ def main() -> int:
               f"{len(perc)} percolated (one network spanning >50% of the ions; "
               f"n_clusters is not meaningful for those)")
 
-    drift = df["molarity_err_pct"].abs() if "molarity_err_pct" in df else None
+    for col, label in (("shell_cutoff_from_rdf", "solvation shell"),
+                       ("clust_cutoff_from_rdf", "cluster contact")):
+        if col in df and df[col].notna().any():
+            n = int((~df[col].fillna(True).astype(bool)).sum())
+            if n:
+                print(f"\n{n} run(s) used a HARDCODED {label} cutoff -- the RDF "
+                      f"minimum was unresolvable (expected for oxygen-free solvents)")
+
+    # to_numeric first: mid-campaign every run is unfinished, the column is
+    # all-None with object dtype, and .abs() raises on it
+    drift = (pd.to_numeric(df["molarity_err_pct"], errors="coerce").abs()
+             if "molarity_err_pct" in df else None)
     if drift is not None and drift.notna().any():
         bad = df[drift > 10]
         print(f"\nmolarity drift (requested -> equilibrated): "

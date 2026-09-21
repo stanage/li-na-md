@@ -34,7 +34,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from common import RUNS  # noqa: E402
+from common import DONE_MARKER, RUNS  # noqa: E402
 
 RCLONE = Path("/scratch/midway3/eshiemogie/myrcc/bin/rclone")
 #: Shared-lab destination. Spaces are fine -- rclone is invoked through
@@ -43,9 +43,6 @@ REMOTE = ("box:Amanchukwu Lab Shared Box Folder/1. Lab Members/"
           "1. Grad Students/17. Stanley/Projects/li-na-md/ht2000/runs")
 #: the pair needed to redo any analysis; everything else is KB-scale
 ARCHIVE = ("prod.xtc", "prod.tpr")
-#: a run is only archived once this exists, i.e. analysis has finished and the
-#: trajectory is no longer needed locally
-DONE_MARKER = "clusters.json"
 
 
 def rclone(*args, check: bool = True) -> subprocess.CompletedProcess:

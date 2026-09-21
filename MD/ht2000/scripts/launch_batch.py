@@ -8,7 +8,7 @@ Build and submission are separate concerns and are separately resumable:
     --submit-only    sbatch whatever is already built and unfinished
     (neither)        do both
 
-Idempotent throughout: a run with solvation.json is considered finished and is
+Idempotent throughout: a run with clusters.json (common.DONE_MARKER) is finished and is
 skipped, so the campaign survives preemption, cancelled chunks and partial
 fetches. Nothing is submitted twice unless --force.
 
@@ -54,7 +54,7 @@ def load_rows(args) -> pd.DataFrame:
 
 def status_of(key: str) -> str:
     d = RUNS / key
-    if (d / "solvation.json").exists():
+    if (d / C.DONE_MARKER).exists():
         return "done"
     if (d / "prod.gro").exists():
         return "prod-done"
@@ -155,7 +155,7 @@ def submit_array(ready: pd.DataFrame, args) -> int:
 
 KEY=$(sed -n "${{SLURM_ARRAY_TASK_ID}}p" {keyfile})
 if [[ -z "$KEY" ]]; then echo "no key for task $SLURM_ARRAY_TASK_ID"; exit 1; fi
-if [[ -f "{RUNS}/$KEY/solvation.json" ]]; then
+if [[ -f "{RUNS}/$KEY/{C.DONE_MARKER}" ]]; then
     echo "$KEY already finished, skipping"; exit 0
 fi
 bash {scripts}/run_md.sh {RUNS}/$KEY

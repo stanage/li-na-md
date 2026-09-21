@@ -16,6 +16,7 @@ of the archived ce_solvation_md solvation.json files:
 Fields added here (the old schema had no Na runs and one shell convention):
     cation            "Li" or "Na"
     shell_cutoff_A    first-minimum cutoff actually used
+    shell_cutoff_from_rdf  False when it fell back to a hardcoded radius
     cn_solv_N, cn_total
 
 The first-shell cutoff is taken from the first minimum of the cation-O RDF
@@ -68,19 +69,47 @@ def _element_of(name: str) -> str:
     return n[:1]
 
 
+#: a first peak must rise this far above the ideal-gas baseline to count as
+#: coordination rather than noise. An unstructured liquid oscillates about
+#: g(r) = 1; a real first solvation shell is several times that.
+MIN_PEAK_HEIGHT = 1.8
+
+
 def first_peak_and_min(r: np.ndarray, g: np.ndarray,
                        rmin_search: float = 1.2) -> tuple[float, float]:
-    """Locate the first RDF maximum and the following minimum."""
+    """Locate the FIRST RDF maximum and the following minimum.
+
+    Two things this deliberately does not do.
+
+    It does not take the global maximum. argmax over the whole range returns
+    whichever peak is tallest, and when a solvent-separated shell outgrows the
+    contact shell -- which happens for weakly coordinating solvents -- that is
+    the wrong peak, and the minimum search then runs off the end. So we walk
+    outward and stop at the first local maximum that clears MIN_PEAK_HEIGHT.
+
+    It does not report a peak it cannot justify. On a structureless or
+    unminimised configuration every candidate stays near g(r) = 1; returning
+    nan there lets the caller fall back explicitly and say so, rather than
+    quoting a cutoff read off noise.
+    """
     m = r >= rmin_search
     rr, gg = r[m], g[m]
-    if gg.size == 0 or gg.max() <= 0:
+    if gg.size < 5 or gg.max() <= 0:
         return float("nan"), float("nan")
     # smooth lightly so shot noise does not create spurious extrema
     k = np.ones(5) / 5.0
     gs = np.convolve(gg, k, mode="same")
-    ipk = int(np.argmax(gs))
+
+    ipk = None
+    for i in range(1, len(gs) - 1):
+        if gs[i] >= gs[i - 1] and gs[i] >= gs[i + 1] and gs[i] >= MIN_PEAK_HEIGHT:
+            ipk = i
+            break
+    if ipk is None:
+        return float("nan"), float("nan")
     peak = float(rr[ipk])
-    # first minimum after the peak
+
+    # first minimum after that peak
     tail = gs[ipk:]
     imin = None
     for i in range(1, len(tail) - 1):
@@ -131,7 +160,11 @@ def compute(run_dir: Path, stride: int = 1, max_frames: int = 400) -> dict:
         rdf = InterRDF(cat, sol_O, nbins=RDF_NBINS, range=(0.0, RDF_RMAX))
         rdf.run(start=0, stop=n_tot, step=step)
         peak, rmin = first_peak_and_min(rdf.results.bins, rdf.results.rdf)
-    cutoff = rmin if np.isfinite(rmin) else DEFAULT_CUTOFF.get(cation, 3.0)
+    # 921 rows of this dataset have no solvent oxygen at all, so the RDF above
+    # is never built and rmin is nan. The fallback is then a hardcoded radius,
+    # which must not be indistinguishable from a measured one downstream.
+    cutoff_from_rdf = bool(np.isfinite(rmin))
+    cutoff = rmin if cutoff_from_rdf else DEFAULT_CUTOFF.get(cation, 3.0)
 
     # ---- coordination, per frame
     from MDAnalysis.lib.distances import capped_distance
@@ -188,6 +221,7 @@ def compute(run_dir: Path, stride: int = 1, max_frames: int = 400) -> dict:
         "cation": cation,
         "anion": anion,
         "shell_cutoff_A": round(float(cutoff), 4),
+        "shell_cutoff_from_rdf": cutoff_from_rdf,
         "anion_donor_elements": list(donors),
         "n_anion_donor_atoms": int(an_donor.n_atoms),
         "cn_solv_N": round(float(np.mean(acc["N"])), 4),

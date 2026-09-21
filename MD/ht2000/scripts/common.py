@@ -48,6 +48,15 @@ RHO_SOLVENT = 1.00     # g/cm^3, assumed for every solvent (as the old campaign 
 RHO_SALT = 1.70        # g/cm^3, recovered by fitting the archived summary.json files
 PACK_FRACTION = 0.65   # packmol builds the box at 65% of the target density
 N_SALT_DEFAULT = 64
+
+#: The single definition of "this run is finished". run_md.sh writes
+#: solvation.json before clusters.json, so keying on the earlier one would
+#: call a run done whose cluster analysis had failed -- and did, because the
+#: drivers disagreed: campaign_worker.sh used clusters.json while
+#: launch_batch.py and run_local_batch.sh used solvation.json. Anything that
+#: needs the test imports this; the two shell drivers hardcode the same name
+#: with a pointer back here.
+DONE_MARKER = "clusters.json"
 MIN_SOLVENT = 10
 Q_SCALE_DEFAULT = 0.8  # ECC charge scaling, ions only
 
@@ -305,10 +314,3 @@ def check_solvent_ff(itp_text: str, smi: str) -> tuple[bool, str]:
     fmt = lambda d: "".join(f"{k}{v}" for k, v in sorted(d.items()))  # noqa: E731
     return False, f"composition mismatch: itp={fmt(got)} expected={fmt(want)}"
 
-
-def env_prelude() -> str:
-    """Shell lines that make gmx_mpi and the python env available in a job."""
-    return (
-        "module purge\n"
-        f"module load {GMX_MODULE}\n"
-    )

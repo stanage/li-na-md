@@ -258,18 +258,42 @@ def clean_pdb(src_text: str, resname: str) -> str:
     return "\n".join(out) + "\n"
 
 
-def xyz_to_pdb(xyz_text: str, resname: str) -> str:
+def xyz_to_pdb(xyz_text: str, resname: str,
+               names: list[str] | None = None) -> str:
+    """fftool .xyz -> .pdb, taking atom names from the topology when given.
+
+    The xyz carries only element symbols, so naming the PDB atoms from it
+    yields C, C, F, F ... while the .itp says C1, C2, F1, F2 ...  grompp then
+    reports "non-matching atom names" for every atom of every such molecule
+    and silently keeps the topology's. Harmless in itself, but it costs a
+    grompp warning per stage, which is exactly the budget a low -maxwarn
+    needs for real problems. Passing the topology names makes the two agree.
+    """
     lines = xyz_text.splitlines()
     n = int(lines[0].split()[0])
     out = []
     for i, ln in enumerate(lines[2:2 + n], start=1):
         f = ln.split()
         el, x, y, z = f[0], float(f[1]), float(f[2]), float(f[3])
-        out.append(f"HETATM{i:5d} {el[:4]:<4s}{resname[:3]:>3s}"
+        nm = names[i - 1] if names and i <= len(names) else el
+        out.append(f"HETATM{i:5d} {nm[:4]:<4s}{resname[:3]:>3s}"
                    f"     1    {x:8.3f}{y:8.3f}{z:8.3f}  1.00  0.00"
                    f"          {el[:2]:>2s}")
     out.append("END")
     return "\n".join(out) + "\n"
+
+
+def atom_names(itp_text: str) -> list[str]:
+    """Atom names from an .itp [atoms] block, in file order."""
+    out = []
+    for sname, lines in split_sections(itp_text):
+        if sname != "atoms":
+            continue
+        for ln in lines:
+            f = strip_comment(ln).split()
+            if len(f) >= 5 and f[0].isdigit():
+                out.append(f[4])
+    return out
 
 
 # --------------------------------------------------------------- builders
@@ -339,7 +363,9 @@ def build_from_fftool(name: str, key: str) -> tuple[str, str]:
     types = normalise_atomtypes(at_lines, ANION_PREFIX)
     body = rewrite_molecule(split_sections(top), ANION_PREFIX, ANION_MOLNAME,
                             resname_of(name), add_pairs=False)
-    return _assemble(name, types, body), xyz_to_pdb(xyz, resname_of(name))
+    assembled = _assemble(name, types, body)
+    return assembled, xyz_to_pdb(xyz, resname_of(name),
+                                 atom_names(assembled))
 
 
 def build_from_ligpargen(name: str, smiles: str) -> tuple[str, str]:
