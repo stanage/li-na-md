@@ -16,6 +16,15 @@ truth for how the 2000-electrolyte high-throughput MD campaign is built and run.
 
 Everything runs with the `moleng` conda python; nothing needs to be installed.
 
+**One-time setup on a fresh checkout.** `runs/` is a symlink to scratch and is not
+tracked, because the campaign's 132 GB does not fit in the pi-chibueze /project
+quota (see 9). Recreate it before running anything, pointing at your own scratch:
+
+```bash
+ln -s /scratch/midway3/$USER/ht2000_runs MD/ht2000/runs
+mkdir -p /scratch/midway3/$USER/ht2000_runs
+```
+
 ```bash
 PY=/scratch/midway3/eshiemogie/moleng/bin/python
 cd /project/chibueze/stanley/projects/li-na-md/MD/ht2000/scripts
