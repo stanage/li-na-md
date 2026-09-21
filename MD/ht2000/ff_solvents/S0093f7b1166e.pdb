@@ -1,0 +1,73 @@
+REMARK LIGPARGEN GENERATED PDB FILE
+ATOM      1  C00 UNK     1       1.000   1.000   0.000
+ATOM      2  C01 UNK     1      -0.521   1.000   0.000
+ATOM      3  C02 UNK     1      -1.058   1.000   1.430
+ATOM      4  C03 UNK     1      -2.590   0.998   1.475
+ATOM      5  C04 UNK     1      -3.150   0.996   2.920
+ATOM      6  C05 UNK     1      -2.656   2.186   3.775
+ATOM      7  C06 UNK     1      -3.090   3.562   3.285
+ATOM      8  C07 UNK     1      -4.687   0.931   2.920
+ATOM      9  C08 UNK     1      -5.234  -0.310   2.255
+ATOM     10  O09 UNK     1      -5.886  -0.263   1.218
+ATOM     11  C0A UNK     1      -4.942  -1.612   2.923
+ATOM     12  C0B UNK     1      -5.755  -2.843   2.594
+ATOM     13  C0C UNK     1      -4.336  -2.738   2.115
+ATOM     14  H0D UNK     1       1.383   1.047  -1.023
+ATOM     15  H0E UNK     1       1.389   0.090   0.469
+ATOM     16  H0F UNK     1       1.391   1.863   0.550
+ATOM     17  H0G UNK     1      -0.886   0.121  -0.543
+ATOM     18  H0H UNK     1      -0.881   1.889  -0.532
+ATOM     19  H0I UNK     1      -0.666   1.886   1.939
+ATOM     20  H0J UNK     1      -0.680   0.119   1.963
+ATOM     21  H0K UNK     1      -2.941   0.101   0.950
+ATOM     22  H0M UNK     1      -2.980   1.853   0.913
+ATOM     23  H0N UNK     1      -2.767   0.088   3.405
+ATOM     24  H0O UNK     1      -1.563   2.163   3.840
+ATOM     25  H0P UNK     1      -3.010   2.058   4.805
+ATOM     26  H0Q UNK     1      -3.021   3.663   2.199
+ATOM     27  H0R UNK     1      -2.453   4.334   3.729
+ATOM     28  H0S UNK     1      -4.122   3.772   3.585
+ATOM     29  H0T UNK     1      -5.113   1.802   2.409
+ATOM     30  H0U UNK     1      -5.070   0.949   3.951
+ATOM     31  H0V UNK     1      -4.608  -1.528   3.954
+ATOM     32  H0W UNK     1      -6.545  -2.756   1.853
+ATOM     33  H0X UNK     1      -5.975  -3.539   3.394
+ATOM     34  H0Y UNK     1      -4.175  -2.583   1.053
+ATOM     35  H0Z UNK     1      -3.593  -3.368   2.590
+TER 
+CONECT    1    2 
+CONECT    2    3 
+CONECT    3    4 
+CONECT    4    5 
+CONECT    5    6 
+CONECT    6    7 
+CONECT    5    8 
+CONECT    8    9 
+CONECT    9   10 
+CONECT    9   11 
+CONECT   11   12 
+CONECT   11   13 
+CONECT    1   14 
+CONECT    1   15 
+CONECT    1   16 
+CONECT    2   17 
+CONECT    2   18 
+CONECT    3   19 
+CONECT    3   20 
+CONECT    4   21 
+CONECT    4   22 
+CONECT    5   23 
+CONECT    6   24 
+CONECT    6   25 
+CONECT    7   26 
+CONECT    7   27 
+CONECT    7   28 
+CONECT    8   29 
+CONECT    8   30 
+CONECT   11   31 
+CONECT   12   32 
+CONECT   12   33 
+CONECT   13   34 
+CONECT   13   35 
+CONECT   12   13 
+END

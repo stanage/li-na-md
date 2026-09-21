@@ -1,0 +1,52 @@
+REMARK LIGPARGEN GENERATED PDB FILE
+ATOM      1  C00 UNK     1       1.000   1.000   0.000
+ATOM      2  S01 UNK     1      -0.813   1.000   0.000
+ATOM      3  C02 UNK     1      -1.109   1.000   1.813
+ATOM      4  C03 UNK     1      -0.525   2.231   2.487
+ATOM      5  N04 UNK     1      -0.042   3.252   3.046
+ATOM      6  C05 UNK     1      -2.640   0.997   2.089
+ATOM      7  C06 UNK     1      -3.135   0.907   3.580
+ATOM      8  C07 UNK     1      -2.772   2.131   4.445
+ATOM      9  C08 UNK     1      -4.677   0.838   3.561
+ATOM     10  C09 UNK     1      -2.586  -0.355   4.262
+ATOM     11  H0A UNK     1       1.353   0.919  -1.031
+ATOM     12  H0B UNK     1       1.381   0.145   0.565
+ATOM     13  H0C UNK     1       1.390   1.930   0.421
+ATOM     14  H0D UNK     1      -0.650   0.098   2.227
+ATOM     15  H0E UNK     1      -3.076   0.144   1.549
+ATOM     16  H0F UNK     1      -3.085   1.901   1.646
+ATOM     17  H0G UNK     1      -2.968   3.069   3.914
+ATOM     18  H0H UNK     1      -1.727   2.113   4.768
+ATOM     19  H0I UNK     1      -3.364   2.152   5.369
+ATOM     20  H0J UNK     1      -5.105   1.770   3.173
+ATOM     21  H0K UNK     1      -5.079   0.687   4.570
+ATOM     22  H0M UNK     1      -5.033   0.013   2.934
+ATOM     23  H0N UNK     1      -1.494  -0.332   4.334
+ATOM     24  H0O UNK     1      -2.871  -1.256   3.710
+ATOM     25  H0P UNK     1      -2.975  -0.450   5.283
+TER 
+CONECT    1    2 
+CONECT    2    3 
+CONECT    3    4 
+CONECT    4    5 
+CONECT    3    6 
+CONECT    6    7 
+CONECT    7    8 
+CONECT    7    9 
+CONECT    7   10 
+CONECT    1   11 
+CONECT    1   12 
+CONECT    1   13 
+CONECT    3   14 
+CONECT    6   15 
+CONECT    6   16 
+CONECT    8   17 
+CONECT    8   18 
+CONECT    8   19 
+CONECT    9   20 
+CONECT    9   21 
+CONECT    9   22 
+CONECT   10   23 
+CONECT   10   24 
+CONECT   10   25 
+END

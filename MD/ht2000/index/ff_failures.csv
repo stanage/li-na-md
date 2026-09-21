@@ -1,0 +1,7 @@
+smiles,key,error
+C1CCC2CCC[C](C1)C2,S361842f7ee0e,"Sorry, an error has been detected in your input data (file, smile or selected charge): &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp export BOSSdir=/var/www/html/ligpargen/apps/boss-4. Problem found in th"
+CC(C)C1[CH]CCC1,Sc01a165c89b5,"Sorry, an error has been detected in your input data (file, smile or selected charge): &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp export BOSSdir=/var/www/html/ligpargen/apps/boss-4. Problem found in th"
+CC[CH]C1C(COC)CCC2C(C)C12,Sf54892d5edaa,"Sorry, an error has been detected in your input data (file, smile or selected charge): &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp export BOSSdir=/var/www/html/ligpargen/apps/boss-4. Problem found in th"
+C[C]1C2CC3(CCC3C2C)C1C,S430bff3cde3c,"Sorry, an error has been detected in your input data (file, smile or selected charge): &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp export BOSSdir=/var/www/html/ligpargen/apps/boss-4. Problem found in th"
+C[C]1[CH][C]C2CC[C](CC1)C2(C)C,S410ef7e99f81,"Sorry, an error has been detected in your input data (file, smile or selected charge): &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp export BOSSdir=/var/www/html/ligpargen/apps/boss-4. Problem found in th"
+N#CC1=CCC=C(F)S1,S9cb746f3716e,"Sorry, an error has been detected in your input data (file, smile or selected charge): &nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp export BOSSdir=/var/www/html/ligpargen/apps/boss-4. Problem found in th"

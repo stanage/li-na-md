@@ -65,11 +65,38 @@ PROTIC = Chem.MolFromSmarts("[OX2H,NX3;H1,H2]")
 #: METAL_ATOMIC_NUMS if silanes/siloxanes are ever wanted.
 ALLOWED_Z = {1, 6, 7, 8, 9, 15, 16, 17, 35, 53}
 
+#: Radicals. RDKit parses an open-shell SMILES happily, but BOSS cannot type
+#: one, and these are generation artifacts (missing hydrogens) rather than
+#: real molecules. Four of the five LigParGen failures on the first fetch of
+#: this library were carbon radicals.
+def _has_radical(mol) -> bool:
+    return any(a.GetNumRadicalElectrons() for a in mol.GetAtoms())
+
+
 #: Phosphorus with no P-C bond, i.e. phosphate and phosphite esters. Measured
 #: from the v1 campaign: all 6 P-containing solvents LigParGen handled have at
 #: least one P-C bond, and the one that failed had P bonded to four oxygens.
 #: So this rejects the failing motif without excluding phosphorus wholesale.
 BAD_P = Chem.MolFromSmarts("[#15;!$([#15]~[#6])]")
+
+
+def known_bad(path) -> set:
+    """Canonical SMILES LigParGen has already refused.
+
+    The filters here are predictions about what BOSS can type; this is the
+    ground truth from actually asking it. Feeding a known-bad molecule back
+    into the library just to have it fail again wastes a fetch slot.
+    """
+    if not path or not os.path.exists(path):
+        return set()
+    import csv
+    out = set()
+    with open(path) as fh:
+        for row in csv.DictReader(fh):
+            m = Chem.MolFromSmiles(row["smiles"])
+            if m is not None:
+                out.add(Chem.MolToSmiles(m))
+    return out
 
 
 def classify(mol, mw_min: float, mw_max: float) -> str:
@@ -107,6 +134,8 @@ def classify(mol, mw_min: float, mw_max: float) -> str:
         return "protic"
     if mol.HasSubstructMatch(BAD_P):
         return "phosphate_ester"
+    if _has_radical(mol):
+        return "radical"
     return ""
 
 
@@ -124,12 +153,20 @@ def main() -> int:
     ap.add_argument("--n_head", type=int, default=8)
     ap.add_argument("--n_embd", type=int, default=256)
     ap.add_argument("--temperature", type=float, default=1.0)
+    ap.add_argument("--exclude-failed", default=os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "MD", "ht2000", "index", "ff_failures.csv"),
+        help="CSV of SMILES LigParGen already rejected; skip them")
     ap.add_argument("--save-every", type=int, default=25,
                     help="checkpoint the CSV every N batches")
     ap.add_argument("--out", default=os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
         "datasets", "generated_500_organic_solvents.csv"))
     args = ap.parse_args()
+
+    BAD = known_bad(args.exclude_failed)
+    if BAD:
+        print(f"excluding {len(BAD)} SMILES LigParGen has already rejected")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"device: {device}   MW window: {args.mw_min}-{args.mw_max}   "
@@ -165,6 +202,8 @@ def main() -> int:
         for smi in prev["smiles"]:
             m = Chem.MolFromSmiles(smi)
             why = classify(m, args.mw_min, args.mw_max)
+            if not why and Chem.MolToSmiles(m) in BAD:
+                why = "ligpargen_rejected"
             if why:
                 dropped[why] = dropped.get(why, 0) + 1
                 continue
@@ -201,6 +240,9 @@ def main() -> int:
                 reasons[why] = reasons.get(why, 0) + 1
                 continue
             canon = Chem.MolToSmiles(mol)
+            if canon in BAD:
+                reasons["ligpargen_rejected"] = reasons.get("ligpargen_rejected", 0) + 1
+                continue
             if canon in keep:
                 dupes += 1
                 continue
