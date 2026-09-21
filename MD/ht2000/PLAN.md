@@ -1,7 +1,9 @@
 # High-Throughput MD for the 2000-Electrolyte Dataset — Working Plan
 
-**Status:** pilot validated (2/2 runs); force fields complete; ready for the full campaign
+**Status:** dataset rebuilt for a sane concentration regime; 490/490 force fields in hand;
+all 2000 rows indexed; campaign driver written and ready — **not yet launched**
 **Created:** 2026-09-19
+**Last updated:** 2026-09-20
 **Owner:** eshiemogie@uchicago.edu
 **Working dir:** `MD/ht2000/` (all new files live here)
 
@@ -23,27 +25,27 @@ $PY build_ion_ff.py
 $PY validate_ions.py --cation Li && $PY validate_ions.py --cation Na
 
 # solvent force fields -- LOGIN NODE ONLY (needs internet), serial by necessity
-$PY fetch_solvent_ff.py                    # all 490, ~65 min (DONE: 487/490)
+$PY fetch_solvent_ff.py                    # all 490, ~65 min (DONE: 490/490)
 $PY fetch_solvent_ff.py --limit 10         # or just a slice
+$PY verify_solvent_ff.py --fix             # ALWAYS audit before a campaign
 
-# pilot (already done; select_pilot.py picks coverage-maximising formulations)
-$PY select_pilot.py -n 2
-$PY launch_batch.py --from-csv ../index/pilot_rows.csv --build-only -j 4
-$PY launch_batch.py --from-csv ../index/pilot_rows.csv --submit-only
-# ...or, if you already hold an interactive GPU, skip the queue entirely:
-bash run_local_batch.sh ../index/pilot_order.txt 1 16
+# index every dataset row before running anything
+$PY build_run_manifest.py                  # -> index/run_manifest.csv
 
-# full campaign
-$PY verify_solvent_ff.py --fix                        # ALWAYS audit first
-$PY launch_batch.py --build-array --tag full          # packing -> caslake CPU nodes
-$PY launch_batch.py --submit-only --array --throttle 12 --tag full   # MD -> gpu
+# THE FULL CAMPAIGN -- one submission, start or continue
+sbatch ../scripts/submit_campaign.sbatch
 
 # status / results at any time
-$PY collect_results.py
+$PY campaign_status.py --lanes             # progress, failures, ETA
+$PY campaign_status.py --failures          # which runs died and where
+$PY collect_results.py                     # -> index/results.csv
 squeue -u $USER
 ```
 
-Re-running any of these is safe — every stage skips work that is already done.
+The campaign is **resumable by design**: lanes skip runs that already finished and
+`run_md.sh` skips stages that already finished, so the *same* `sbatch` command both
+starts the campaign and continues it after a wall-clock kill. Expect to run it ~10 times.
+The same is true of every other command above — all of them skip work already done.
 
 ---
 
@@ -63,20 +65,33 @@ Per formulation, produce the same artifacts the old campaign produced:
 | `summary.json` | formulation spec + counts + box + atom count |
 | `density.xvg` | NPT-average density |
 
-**Order of work:** force fields → run builder → pilot → full 2000.
-Status: force fields done and verified, pilot run and validated, full campaign not yet launched.
+**Order of work:** force fields → run builder → pilot → *dataset rebuild* → full 2000.
+Status: pilot run and validated on the original dataset; the dataset was then rebuilt
+(§2) and the solvent library refetched to match; 490/490 force fields verified; all 2000
+rows indexed; campaign driver ready. Full campaign not yet launched.
 
 ---
 
 ## 2. What the dataset looks like
 
-`datasets/electrolyte_dataset_2000.csv` — 2000 rows, columns `salt, solvent, concentration`.
+> **This section describes the dataset as rebuilt on 2026-09-20.** The original
+> generated dataset put most rows outside any sensible electrolyte regime; that is why
+> it was regenerated rather than simulated as-is. The reasoning is in §2.2.
 
-- **490 unique solvents**, all GPT-generated (`generated_500_organic_solvents.csv`).
-  All parse in RDKit. 8–25 heavy atoms, MW 113–359. Elements: C,H,N,O,S,F,Cl,P,B.
+`datasets/electrolyte_dataset_2000.csv` — 2000 rows, columns
+`salt, solvent, concentration, solv_per_ion_pair`.
+
+- **490 unique solvents** drawn from a 500-solvent GPT-generated library
+  (`generated_500_organic_solvents.csv`). All parse in RDKit.
+  **MW 88–199** (mean 177). Elements: **C, H, N, O, S, F, Cl, P** — no boron, no silicon.
 - **40 unique salts** = 20 anions × {Li⁺, Na⁺}.
-- **Concentration** 0.3–3.0 M (28-point grid).
+- **Concentration 0.3–1.5 M** (28-point grid).
 - Single solvent per row (the old campaign had up to 5 — simpler here).
+- **Median 5.97 solvent molecules per ion pair**; 401 rows below 4, **none below 2**.
+
+The solvent library is filtered at generation time — see §2.2 for what is excluded and
+why. Only 490 of the 500 library solvents appear in the dataset; the sampler simply never
+drew the other 10.
 
 ### 2.1 Known data issues (carry forward, do not silently ignore)
 
@@ -85,41 +100,87 @@ Status: force fields done and verified, pilot run and validated, full campaign n
    → Handled by a `SALT_FIXUPS` map in `scripts/common.py`. The source CSV is *not*
    edited (it lives outside `MD/`); the corrected SMILES is what gets simulated and is
    recorded in each run's `summary.json`.
-2. **Chemically implausible solvents.** The generative model emitted species that are not
-   viable battery solvents — e.g. acid chlorides (`CC(=O)Cl`), peroxides (`...OO1...`),
-   aldehydes. The old workflow had `filter_li_metal.py` (non-PFAS / aprotic / no
-   peroxide) for exactly this. **Decision: do not filter.** The task is to simulate the
-   2000 as given; filtering is a separate scientific call for you to make. If you decide
-   to drop them, the old `filter_li_metal.py` can be run over
-   `index/solvent_manifest.csv` to produce an exclusion list — no filtering hook is
-   built into the pipeline today.
-3. **Na⁺ is new.** The old campaign was Li-only. Na⁺ parameters are taken from the same
-   CL&P table as the old Li⁺ (see §4.2), so Li and Na are treated consistently.
+2. **Chemically implausible solvents — now filtered at generation.** *(Decision reversed
+   2026-09-20; the original plan was to simulate everything as given.)* The generative
+   model emitted species that are not viable battery solvents, and separately some that
+   no force-field tool can parameterise at all. Both classes are now rejected inside
+   `generate_500_solvents.py` rather than downstream, so the dataset never contains them:
 
-4. **⚠ Most of the dataset is not in a dilute-electrolyte regime.** This is the most
-   important thing on this page and it is a property of the dataset, not of the
-   pipeline. The generated solvents are heavy (mean MW **242**, vs ~90 for DME or EC),
-   but the concentrations span 0.3–3.0 M, a range calibrated for light carbonates and
-   ethers. Combining the two leaves very little solvent per ion pair:
+   | filter | SMARTS / rule | why |
+   |---|---|---|
+   | aldehyde | `[CX3H1](=O)[#6]` | reactive toward Li metal; not used as a solvent |
+   | protic | `[OX2H,NX3;H1,H2]` | O–H / N–H attacks Li⁰; also breaks the aprotic premise |
+   | radical | any atom with unpaired electrons | **BOSS cannot type them** — hard LigParGen failure |
+   | boron | element filter (`ALLOWED_Z`) | BOSS has no boron templates |
+   | phosphate/phosphite ester | `[#15;!$([#15]~[#6])]` (P with no P–C bond) | BOSS has no templates |
+   | charged / multi-fragment / metal-containing | — | not a neutral single-component solvent |
 
-   | solvent molecules per salt formula unit | rows |
-   |---|---|
-   | < 1 (more salt than solvent) | ~110 |
-   | < 2 (solvate ionic-liquid regime) | **849** |
-   | < 4 (cannot fill a 4-coordinate first shell with solvent alone) | **1463 / 2000** |
-   | median | **2.3** |
+   Allowed elements are `H, C, N, O, F, P, S, Cl, Br, I`. **Silicon is excluded**, though
+   LigParGen handles it fine — it is caught by the inherited `METAL_ATOMIC_NUMS`
+   (`range(11,15)`) *before* the element check, so re-enabling it needs edits in two
+   places, not one.
 
-   By comparison the old campaign's typical 1 M LiFSI/DME run had **7.5**. Concretely,
-   the pilot's 3.0 M NaFSI row packs 54 solvent molecules against 64 ion pairs.
+   The generator also reads `index/ff_failures.csv` and skips any SMILES already known to
+   fail LigParGen, which closes the loop on one-off rejects that no structural rule
+   catches (see §8, S6c).
+3. **Na⁺ is new.** The old campaign was Li-only. Na⁺ parameters come from the same CL&P
+   table as Li⁺ (§4.2), so the two are treated consistently.
 
-   Consequence: for most rows `cn_solv_O` will be small and `agg` will be ≈1 — the
-   solvation descriptors saturate and lose the ability to discriminate between
-   formulations, which is presumably what they are wanted for. The runs are still
-   valid MD; they are just mostly sampling concentrated/solvate electrolytes.
+---
 
-   **Not acted on** — the brief is to simulate the 2000 as given, and the
-   high-concentration regime is itself relevant to Li-metal anodes (LHCEs). But the
-   choice belongs to you; see §10.2 for the options.
+### 2.2 The concentration/molecular-weight mismatch — diagnosed, then fixed
+
+This was the most important problem found in the original dataset, and it is the reason
+the dataset was regenerated rather than simulated as delivered.
+
+#### The diagnosis
+
+Molarity fixes the *volume* per mole of salt, not the *stoichiometry*. The original
+generated solvents were heavy (mean MW **242**, vs ~90 for DME or EC), but the
+concentrations spanned 0.3–3.0 M — a range calibrated for light carbonates and ethers.
+Combining the two leaves almost no solvent per ion pair, because a mole of heavy solvent
+eats the whole box:
+
+| solvent molecules per salt formula unit | original | **rebuilt** |
+|---|---|---|
+| < 1 (more salt than solvent) | ~110 | **0** |
+| < 2 (solvate ionic-liquid regime) | 849 | **0** |
+| < 4 (cannot fill a 4-coordinate first shell with solvent alone) | **1463 / 2000** | **401 / 2000** |
+| median | **2.3** | **5.97** |
+
+For reference the old campaign's typical 1 M LiFSI/DME run had 7.5, and the original
+pilot's 3.0 M NaFSI row packed 54 solvent molecules against 64 ion pairs.
+
+The consequence was visible in the pilot (§8): at 3.0 M NaFSI the descriptors saturate —
+`agg` = 0.965, `ssip` = 0.000 — so the run carries almost no information distinguishing
+it from any other concentrated row. Roughly 1500 of 2000 rows would have behaved that way.
+
+#### The fix
+
+Two changes, both in the dataset generators, chosen to attack the product `MW × M`
+rather than either factor alone:
+
+- **MW ceiling 200 g/mol** in `generate_500_solvents.py` (was unbounded; realised range
+  is now 88–199, mean 177).
+- **Concentration ceiling 1.5 M** in `build_electrolyte_dataset.py` (was 3.0 M).
+
+1.5 M is not arbitrary: it is the top of the range where conventional Li-ion electrolytes
+actually operate (1.0–1.2 M is the industrial norm), so the dataset now spans dilute to
+moderately concentrated rather than dilute to solvate-ionic-liquid.
+
+The 401 rows still below 4 solvents per pair are the genuinely concentrated corner of a
+legitimate range, not an artifact — they are worth keeping and are flagged by the
+`solv_per_ion_pair` column in both the dataset and `results.csv`.
+
+#### What this does *not* fix
+
+Molarity is a property of the *equilibrated* box, and the builder has to guess a density
+to convert it into molecule counts (§5.1, ρ_salt = 1.70 g/cm³ flat). The requested and
+achieved molarity therefore differ. Measured on the pilot: 0.3 M landed at 0.300 M
+(−0.1%), but 3.0 M landed at 3.441 M (**+14.7%**). Capping at 1.5 M shrinks this error
+but does not remove it, so `collect_results.py` now records `molarity_actual` and
+`molarity_err_pct` for every run and flags anything off by >10% (§8, S5b). **Report the
+achieved molarity, not the requested one.**
 
 ---
 
@@ -182,11 +243,12 @@ Two consequences:
 > 3. `setup_run.py` refuses to build a run dir from an .itp that does not match its
 >    SMILES.
 >
-> Current library status: 10/10 verified (1 corrupted entry found and repaired).
+> Current library status: **490/490 composition-verified** (1 corrupted entry found and
+> repaired during the pilot).
 - Fallback chain already in the scraper: `cm1abcc/opt=0` → `cm1a/opt=1` → `cm1a/opt=2`.
 - Failures are written to `index/ff_failures.csv` with the returned HTML for diagnosis.
-  Expect a handful (boron- and phosphorus-containing species are the likely casualties:
-  2 B atoms and 7 P atoms across the whole set).
+  **`generate_500_solvents.py` reads this file back** and excludes known-bad SMILES from
+  future libraries, so each failure is paid for once (§8, S6c).
 - **Measured rate: ~9 s/solvent serially** (10/10 of the pilot solvents succeeded), so
   490 solvents ≈ **75 min**, not the 2–3 h originally estimated.
 - Charge matters: the original scraper hardcoded the server's `dropcharge` field to 0,
@@ -292,28 +354,39 @@ n_solvent = (V_target − V_salt) · ρ_solv · N_A / MW_solv    ρ_solv = 1.00 
 **Validation against the archive:** `L_build` reproduces `box_build_nm` **exactly on 100%**
 of single-solvent runs; `n_solvent` matches on **48/53**. The 5 misses are all degenerate
 super-concentrated cases (M = 5.5 and 10.0) where the formula goes negative and the old
-code clamped to a floor — outside our 0.3–3.0 M range, so immaterial here. A floor of 10
-solvent molecules is kept for safety.
+code clamped to a floor — far outside our 0.3–1.5 M range, so immaterial here. A floor of
+10 solvent molecules is kept for safety; **0 of the 2000 rows hit it** (`clamped` is false
+throughout `index/run_manifest.csv`), which is a direct consequence of the §2.2 rebuild.
+
+**ρ_salt = 1.70 g/cm³ is a flat assumption for all 20 anions** and is the main source of
+the requested-vs-achieved molarity gap discussed in §2.2. Left as-is: at the 1.5 M ceiling
+the error is tolerable, and `molarity_actual` records the truth per run.
 
 Packmol then packs into the (deliberately expanded) `L_build` box and NPT compresses to the
 true density. Packmol's "ENDED WITHOUT PERFECT PACKING" exit is non-fatal by design.
 
 ### 5.2 Projected system sizes for the 2000
 
-With `n_salt = 64`:
+With `n_salt = 64`, measured over all 2000 rows of the **rebuilt** dataset
+(`index/run_manifest.csv`, column `n_atoms_est`):
 
 | | atoms |
 |---|---|
-| min | 2,134 |
-| median | 6,400 |
-| p90 | 20,394 |
-| max | 46,337 |
+| min | 3,908 |
+| median | **12,541** |
+| p90 | 28,288 |
+| max | 47,152 |
 
-`L_build` spans 3.79–8.17 nm; total ≈ 19M atom-runs. Median is smaller than the old
-campaign (~11k atoms) but the tail is heavier, because low molarity + heavy solvents
-inflate the box. **`n_salt` is exposed as a CLI flag** — dropping to 32 halves everything
-(median 3,201 atoms, max 23,145) if the tail proves too expensive. Default stays at 64 for
-fidelity with the old work.
+`L_build` spans 4.78–8.17 nm; total ≈ **30.7M atom-runs**.
+
+Note this got *bigger*, not smaller, after the §2.2 rebuild (median 6,400 → 12,541).
+That is the expected trade: capping molarity at 1.5 M means more solvent per ion pair,
+and solvent molecules are what fill the box. The campaign buys physically meaningful
+solvation structure at roughly 2× the compute. Median is now comparable to the old
+campaign (~11k atoms).
+
+**`n_salt` is exposed as a CLI flag** — dropping to 32 roughly halves everything if the
+tail proves too expensive. Default stays at 64 for fidelity with the old work.
 
 ---
 
@@ -352,7 +425,7 @@ one run alone gives **818 ns/day**; three concurrent runs give **142 + 349 + 148
 saturates the GPU, so `run_local_batch.sh` should be used with concurrency **1**. This
 does not affect the sbatch path, where each job gets its own GPU.
 
-### Four cluster gotchas, all found the hard way
+### Five cluster gotchas, all found the hard way
 
 0. **Drop `-ntmpi 1` from every mdrun call.** Midway3's GROMACS is built against
    *real MPI*, not thread-MPI, and `-ntmpi` is a hard error there:
@@ -371,6 +444,23 @@ does not affect the sbatch path, where each job gets its own GPU.
 3. **`module` is a shell function from the login profile.** `run_md.sh` re-execs itself
    under `bash -l` if it is not defined, so it works whether invoked from a batch script,
    a job array, or by hand.
+
+> ### ⚠ 4. The `gpu` partition does NOT isolate GPUs per job
+>
+> There is no cgroup device isolation on these nodes. `nvidia-smi -L` inside a job lists
+> **every GPU on the node**, including ones allocated to other people, and setting
+> `CUDA_VISIBLE_DEVICES` yourself will happily run on them.
+>
+> This was found the hard way on 2026-09-20: a 4-GPU concurrency test on an interactive
+> node holding `gres/gpu=1` was launched with `CUDA_VISIBLE_DEVICES=0,1,2,3` and
+> **trespassed on three GPUs belonging to another user (jlguerra)**. Nothing warned us;
+> the job simply ran.
+>
+> **Rule, now enforced in `submit_campaign.sbatch`:** never set `CUDA_VISIBLE_DEVICES`.
+> Trust the value SLURM exports, and warn loudly if it is missing. The script prints both
+> the visible set and the node's true device count on every launch so a mismatch is
+> obvious in the log. The old multi-lane loop that assigned `CUDA_VISIBLE_DEVICES="$L"`
+> per lane has been removed for exactly this reason.
 
 > **Performance caveat:** the old campaign's timings (~680 ns/day, ~15 min/run) were on
 > A100s. These are Quadro RTX 6000s — roughly 3–4× slower for GROMACS — so expect
@@ -394,17 +484,26 @@ MD/ht2000/
 │   ├── select_pilot.py       ← deterministic, coverage-driven pilot selection
 │   ├── setup_run.py          ← build ONE run dir (packmol + top + mdp + submit.sh)
 │   ├── run_md.sh             ← the 4-stage GROMACS protocol; stage-resumable
-│   ├── launch_batch.py       ← build + submit (individually or as a job array)
+│   ├── launch_batch.py       ← build + submit (per-run or job array) — pilot-era path
+│   ├── run_local_batch.sh    ← run a keyfile on an interactive GPU, no queue
 │   ├── analyze_solvation.py  ← reproduce solvation.json from prod.xtc
 │   ├── cluster_analysis.py   ← ion clusters from prod.xtc (own cation-anion cutoff)
 │   ├── build_run_manifest.py ← index all 2000 rows up front (key, composition, stage)
-│   └── collect_results.py    ← gather all summary/solvation/cluster json → results table
-├── ff_solvents/  S<hash>.{itp,gro,pdb,smi}
+│   ├── collect_results.py    ← gather all summary/solvation/cluster json → results table
+│   ├── submit_campaign.sbatch ← THE campaign entry point: 3-task array, 1 GPU each
+│   ├── campaign_worker.sh    ← one lane; strides rows, logs, stops before the wall
+│   └── campaign_status.py    ← progress / failures / ETA, read from disk
+├── ff_solvents/  S<hash>.{itp,gro,pdb,smi,lmp}   490 solvents × 5 files
 ├── ff_ions/      Li.itp Na.itp <ANION>.itp/.pdb + ions_manifest.json
 ├── runs/         el<hash>/ ... (one dir per formulation, mirrors old layout)
-├── index/        formulation_index.csv, ff_failures.csv, batch manifests
-└── logs/
+├── index/        run_manifest.csv, results.csv, solvent_manifest.csv,
+│                 ff_failures.csv, pilot_* (historical)
+├── logs/         slurm/  campaign/  + fetch and generation logs
+└── session_transcript.txt   ← gitignored; running record of the build sessions
 ```
+
+`launch_batch.py` and `run_local_batch.sh` are the pilot-era paths and still work, but the
+2000-run campaign goes through `submit_campaign.sbatch` (§9).
 
 Run keys: `el<12-hex>` of `canonical(salt)|canonical(solvent)|M` — deterministic, so a row
 always maps to the same run dir and the campaign is restartable.
@@ -423,10 +522,25 @@ always maps to the same run dir and the campaign is restartable.
       four stages on the local V100. Results below.
 - [x] **S5 — Analysis.** `analyze_solvation.py` reproduces the old schema; Li/Na RDF
       peaks and coordination numbers are physically correct.
-- [x] **S6 — Full solvent FF fetch.** 487/490 fetched (65 min, serial); 3 failures are
-      boron/phosphate esters LigParGen cannot do.
+- [x] **S5b — Ion cluster analysis.** `cluster_analysis.py` added and wired into
+      `run_md.sh`; cross-checked against OVITO (§8.1). `collect_results.py` extended with
+      achieved molarity, dataset row linkage and the full cluster block.
+- [x] **S6 — Full solvent FF fetch (original library).** 487/490 fetched (65 min,
+      serial); 3 failures were boron/phosphate esters LigParGen cannot do.
 - [x] **S6b — Audit the library.** 487/487 composition-verified.
-- [ ] **S7 — Full campaign.** 2000 runs, one throttled job array.
+- [x] **S6c — Dataset rebuild (§2.2).** MW ≤ 200 and M ≤ 1.5 applied; solvent library and
+      `electrolyte_dataset_2000.csv` regenerated in place (no v2 variants kept). Six
+      LigParGen failures in the new library traced to 5 carbon radicals + 1 thiophene;
+      a radical filter was added and the thiophene recorded in `ff_failures.csv`, which
+      the generator now reads back.
+- [x] **S6d — Refetch the library.** Zero overlap with the old 490, so all 2445 cached
+      files were cleared and refetched: **490/490 complete, 2450 files.**
+- [x] **S6e — Index the dataset.** `build_run_manifest.py` → all 2000 rows keyed,
+      costed and checked for force-field coverage. 2000/2000 runnable, 0 clamped.
+- [x] **S6f — Campaign driver.** `submit_campaign.sbatch` + `campaign_worker.sh` +
+      `campaign_status.py` (§9).
+- [ ] **S7 — Full campaign.** 2000 runs via `sbatch submit_campaign.sbatch`, resubmitted
+      until `campaign_status.py` reports complete. **← next action, awaiting go-ahead**
 - [ ] **S8 — Collect.** `collect_results.py` → single results table.
 
 ### Build cost (measured)
@@ -450,7 +564,14 @@ packmol cost.
 5. `solvation.json` produced with Li⁺/Na⁺ CN in a believable range.
 6. Wall time per run recorded, to extrapolate the 2000-run cost.
 
-### Pilot results
+### Pilot results *(historical — ran against the pre-rebuild dataset)*
+
+> These two runs validated the **pipeline**, and that conclusion still holds — the
+> protocol, force fields and analysis are unchanged. But they were built from the
+> original 0.3–3.0 M dataset, so the 3.0 M formulation below **no longer exists** in the
+> rebuilt dataset. Both run directories have since been deleted; `runs/` is empty and the
+> campaign starts from zero. Keep this table for what it establishes about physics and
+> cost, not as a description of what will be run.
 
 Scaled down from 10 runs to **2** on 2026-09-19 at the user's request; the other eight
 run dirs were deleted. The two kept still span both cations, both concentration
@@ -482,28 +603,63 @@ Three things this establishes:
    changes CN by only 3.43 → 3.63 (Li) and 1.00 → 1.08 (Na). So the automatic
    first-minimum choice is not doing anything load-bearing, which is what we want when
    the same code has to run unattended over 2000 systems.
-3. **The concentration problem from §2.1 is real and visible.** The dilute LiFSI run
-   gives a well-spread SSIP/CIP/AGG distribution (0.23 / 0.63 / 0.15) — informative.
-   The 3 M NaFSI run, with 54 solvent molecules to 64 ion pairs, is 96.5% aggregates
-   with SSIP = 0.000 — saturated, and indistinguishable from any other concentrated
-   row. Expect the latter behaviour for roughly 1500 of the 2000 formulations.
+3. **The concentration problem was real and visible — and is what triggered the
+   rebuild.** The dilute LiFSI run gives a well-spread SSIP/CIP/AGG distribution
+   (0.23 / 0.63 / 0.15) — informative. The 3 M NaFSI run, with 54 solvent molecules to
+   64 ion pairs, is 96.5% aggregates with SSIP = 0.000 — saturated, and
+   indistinguishable from any other concentrated row. That would have been the
+   behaviour of ~1500 of the 2000 formulations, which is why the dataset was
+   regenerated (§2.2) rather than run as delivered.
+
+### 8.1 Ion cluster analysis — validated against OVITO
+
+`cluster_analysis.py` does on-cluster clustering so trajectories never have to be
+downloaded. Method:
+
+1. Take the cation–anion-donor RDF over the production trajectory.
+2. Cutoff = the **first minimum** of that RDF (a different, larger quantity than the
+   cation–solvent-O `shell_cutoff_A` used by `analyze_solvation.py` — the two are not
+   interchangeable and both are recorded).
+3. Per frame, build a contact graph with `capped_distance` under the minimum-image
+   convention, then `scipy.sparse.csgraph.connected_components`.
+
+**Two counting conventions are reported, because they differ and the difference matters:**
+
+| column | counts | equals |
+|---|---|---|
+| `n_components` | every component, lone ions included | OVITO's "cluster count" |
+| `n_clusters` | aggregates of ≥ 2 ions only | — |
+
+with the identity `n_components = n_clusters + n_free_cation + n_free_anion`.
+
+Cross-check: for the Li pilot at frame 348/800 with a 2.67 Å cutoff, ours gives **72**
+against OVITO's **~70** (OVITO set to Residue type, i.e. whole molecules). Frame-to-frame
+σ is 3.1, so the two agree. Reporting a single frame is misleading — hence the `_sd`
+columns.
+
+Also recorded: `free_cation_frac`, `mean_cluster_size`, `max_cluster_size`,
+`largest_cluster_frac`, `percolating_frac` and `mean_cluster_charge`. When
+`percolating_frac` > 0.5 a single network spans the box and `n_clusters` stops being
+meaningful; `collect_results.py` prints how many runs are in that state.
 
 ### Solvent force-field library — complete
 
-477 fetched in 65 min (serial), plus 10 from the pilot. **487 of 490 solvents available,
-and `verify_solvent_ff.py` reports 487/487 composition-verified.**
+The library was refetched from scratch after the §2.2 rebuild: the new 490 solvents have
+**zero overlap** with the previous 490, so all 2445 cached files were deleted rather than
+reused. **490/490 solvents available (2450 files), all composition-verified** — every one
+of the 2000 dataset rows is runnable.
 
-The 3 failures are exactly the predicted casualties — LigParGen/BOSS has no templates
-for boron esters or hypervalent phosphate esters:
+Six LigParGen failures surfaced during the refetch and all six were designed out rather
+than worked around:
 
-| solvent | rows affected |
-|---|---|
-| `CC(C)OP(=O)(OC(C)C)OC(C)C` (triisopropyl phosphate) | 5 |
-| `CCC1CCC(B(OC)OC)C1` (boronate ester) | 5 |
-| `CCCCCCCC1COB(CC)O1` (dioxaborolane) | 4 |
+| failure | count | resolution |
+|---|---|---|
+| carbon radicals (`[C]`, `[CH]`) | 5 | RDKit parses them, BOSS cannot type them → radical filter added to the generator |
+| `N#CC1=CCC=C(F)S1` (thiophene) | 1 | no obvious structural rule; recorded in `ff_failures.csv`, which the generator now reads back |
 
-**14 of 2000 rows (0.7%) are blocked; 1986 are runnable.** If those 14 matter, the
-options are GAFF/antechamber or OpenFF for those three species; otherwise drop them.
+The generator re-sampled replacements for all six, so the library is full at 490 with no
+blocked rows — an improvement on the pre-rebuild state, where 14 of 2000 rows (0.7%) were
+unrunnable for want of boron/phosphate-ester parameters.
 
 ### Pilot selection
 
@@ -515,34 +671,72 @@ both concentration extremes — so failures surface now rather than at run 1500.
 
 ## 9. Scaling to 2000
 
-### The binding constraint: the `gpu` QOS
+### The binding constraints
 
 ```
-MaxJobsPU = 12      MaxTRESPU = cpu=192, gres/gpu=16, node=4      MaxWall = 1-12:00:00
+gpu QOS:  MaxJobsPU = 12    MaxTRESPU = cpu=192, gres/gpu=16, node=4    MaxWall = 1-12:00:00
 ```
 
-**At most 12 of our jobs run at once**, no matter how many are queued. That decides the
-shape of the campaign:
+The QOS caps us at 12 running jobs / 16 GPUs. But the *real* constraint turned out not to
+be the QOS — it is **partition occupancy**. Every GPU in the partition is held by
+single-GPU jobs from other users, so a `--gres=gpu:4` whole-node request has to wait for
+some node's last job to drain: **measured at 25 h minimum, 84 h on one node.** A
+`--gres=gpu:1` request slots into the first GPU that frees anywhere on the partition.
 
-- Submit **one throttled job array** (`launch_batch.py --array --throttle 12`), not 2000
-  independent `sbatch` calls — the latter would park ~1990 pending jobs in a shared
-  queue for no gain. The array driver skips any task whose `solvation.json` already
-  exists, so resubmitting the same array resumes the campaign.
-- Throughput estimate: 6.1 ns of MD per run (0.1 heat + 2 NPT + 4 prod). At a median
-  ~6.4k atoms that is roughly 10–25 min per run on one GPU, so
-  **2000 runs / 12 concurrent × ~20 min ≈ 2.5–4 days** of wall time, longer with the
-  heavy tail and queue contention.
-- Nodes are `midway3-[0277-0286,0294]`, 4 GPUs and 48 cores each; 8 cores per run leaves
-  the node comfortably shareable.
+### The shape that follows: one sbatch, three lanes, one GPU each
+
+`submit_campaign.sbatch` is a **3-task job array, 1 GPU + 12 CPUs + 32 G per task**.
+One submission covers all 2000 runs.
+
+| | considered | chosen |
+|---|---|---|
+| request | 3 nodes × `gpu:4`, 4 lanes/task = 12 concurrent | 3 × `gpu:1` = **3 concurrent** |
+| queue wait | 25–84 h | minutes |
+| wall to finish | ~85 h | **~330 h** |
+| neighbourliness | occupies whole nodes | leaves the rest of each node free |
+
+We trade 4× throughput for actually starting, and for not monopolising nodes. **Raise
+`NLANES` and `--gres` together if the partition frees up** — the QOS ceiling allows up to
+12 jobs / 16 GPUs.
+
+Why not GPU memory: it is not separately requestable on Midway3. `--gres=gpu:1` hands
+over one whole 24 GB device, and these systems need ~2 GB. `--mem=32G` is host memory,
+asked for as a share rather than `--mem=0` so the node stays usable by others.
+
+### How the work is divided: row striding, no coordination
+
+Each lane claims rows by `row_index % NLANES == LANE`. There is no shared queue, no lock
+file and no master process — a lane can die, be resubmitted, or run on a different node
+and it still covers exactly its own rows. `campaign_worker.sh` then:
+
+- **skips any run that already has `clusters.json`** (the last artifact written), so a
+  resubmission resumes rather than repeats;
+- writes `runs/<key>/pipeline.log` per run with a formulation header and a terminating
+  `PIPELINE_ok` / `PIPELINE_FAILED`;
+- appends progress to `logs/campaign/lane_NN.csv`;
+- **stops gracefully 45 min before the wall clock** (`RESERVE_S=2700`) rather than being
+  killed mid-stage.
+
+Between that and `run_md.sh`'s stage-level resume (it skips any stage whose `.gro`
+already exists), the same command is both "start" and "continue". Expect ~10 resubmissions
+at the 36 h cap.
+
+### Throughput estimate
+
+6.1 ns of MD per run (0.1 heat + 2 NPT + 4 prod) at a median 12.5k atoms. On the Quadro
+RTX 6000s, budget roughly **30–60 min per median run**, so 2000 runs / 3 concurrent
+≈ **330 h ≈ 14 days** of wall time, longer with the heavy tail. Nodes are
+`midway3-[0277-0286,0294]`, 4 GPUs and 48 cores each.
 
 ### Practical notes
 
-- **Split the heavy tail.** The 46k-atom, low-molarity systems should go in their own
-  array with a longer `--hours`; the default 8 h suits the median case. `run_md.sh` is
-  stage-resumable, so a task killed at the wall clock resumes from its last finished
-  stage when the array is resubmitted.
-- **Build first, separately.** `--build-only -j 16` on a CPU node; packing 2000 systems
-  is ~160 CPU-hours and has no business running on a login node or holding a GPU.
+- **Build is inline, not a separate stage.** Unlike the pilot-era `launch_batch.py` path,
+  each lane packs its own run dir immediately before simulating it. Packmol is ~290 s per
+  system and it runs on the GPU node's CPUs while that lane's GPU is idle between runs —
+  wasteful in principle, but 2000 × 290 s ≈ 160 CPU-hours spread across 3 lanes is small
+  next to 330 h of MD, and it removes a whole build/submit handoff.
+- **The heavy tail is not split out.** With a 36 h wall and graceful stop, a 47k-atom run
+  that does not finish simply resumes on the next submission.
 - Disk: trajectories dominate. At 4 ns / 5000-step output and median 6.4k atoms, budget
   roughly 10–50 MB per `prod.xtc` → **~20–100 GB total**. Check the quota on
   `/project/chibueze` before S7; if tight, thin `nstxout-compressed`.
@@ -556,27 +750,28 @@ shape of the campaign:
 1. **Keep `n_salt = 64`?** Faithful to the old work, but produces a 20× spread in system
    size. Alternative: fix the box (~5 nm) and let `n_salt` float with concentration.
    *Current decision: keep 64, revisit after the pilot timing.*
-2. **What to do about the concentration/MW mismatch (§2.1 item 4)?** Options, roughly in
-   increasing order of intervention:
-   - **(a) Nothing.** Run all 2000 as specified and report the solvent:salt ratio
-     alongside each result, so the saturated points can be excluded at analysis time.
-     *This is the current default.*
-   - **(b) Analyse the dilute subset separately.** ~537 rows have ≥4 solvent per salt
-     and behave like conventional electrolytes; treat the rest as a second population.
-   - **(c) Re-express concentration.** Regenerate the dataset in molality or salt mole
-     fraction rather than molarity, so heavy and light solvents are compared at matched
-     stoichiometry rather than matched mol/L.
-   - **(d) Cap molarity per solvent** so that every row keeps at least ~4 solvents per
-     ion pair.
-
-   (c) and (d) mean changing `datasets/electrolyte_dataset_2000.csv`, which is outside
-   `MD/` and outside this task's scope — flagging, not doing.
-3. **Solvent density is assumed 1.0 g/cm³ for everything** (as the old campaign did).
-   For MW-240 branched esters/ketones the true value is ~0.85–1.05, so the initial box
-   is off by up to ~15%. NPT fixes the density, but it shifts the *composition* slightly
-   because `n_solvent` is derived from it. Low priority; fixable with a
-   group-contribution density estimate if it ever matters.
-4. **Filter implausible solvents?** Currently flagged but not dropped. Your call.
+2. ~~**What to do about the concentration/MW mismatch?**~~ **RESOLVED 2026-09-20.**
+   Fixed at the source by capping MW at 200 and molarity at 1.5 M, which is a blend of
+   the old options (c) and (d) — see §2.2. The scope note that once said this was
+   "outside this task's scope" no longer applies: the dataset generators were changed
+   and `datasets/electrolyte_dataset_2000.csv` was regenerated in place, at your
+   direction, with no v2 variants kept.
+3. **Solvent density is assumed 1.0 g/cm³ for everything** (as the old campaign did), and
+   **salt density 1.70 g/cm³ for all 20 anions**. NPT fixes the *density* but not the
+   *composition*, because `n_solvent` was already derived from the guess — so the
+   achieved molarity differs from the requested one (pilot: −0.1% at 0.3 M, +14.7% at
+   3.0 M). Mitigated rather than solved: the 1.5 M cap shrinks the error and
+   `molarity_actual` / `molarity_err_pct` record it per run. A group-contribution density
+   estimate, or per-anion crystal densities, would improve it if it ever matters.
+4. ~~**Filter implausible solvents?**~~ **RESOLVED 2026-09-20 — yes, at generation time.**
+   Aldehydes, protic species, radicals, boron and phosphate/phosphite esters are rejected
+   by `generate_500_solvents.py` (§2.1 item 2). Filters are hardcoded deliberately: a CLI
+   override was prototyped and removed, because the chemistry rules should not be
+   silently togglable per invocation.
+4b. **Silicon is excluded, arguably by accident.** LigParGen handles Si fine, but Si is
+   caught by the inherited `METAL_ATOMIC_NUMS = range(11,15)` before the element check.
+   Re-enabling it requires edits in two places. Left excluded; flagged so it is a choice
+   rather than an oversight.
 5. **Na⁺ ECC scaling.** q = 0.8 is well-established for Li⁺ in carbonates/ethers; for Na⁺
    the same 0.8 is a reasonable default but is an assumption worth stating in any writeup.
 6. **4 ns production** is enough for solvation structure (what we want) but *not* for
@@ -615,4 +810,40 @@ shape of the campaign:
   - Cluster gotchas found with a probe job: `module purge` breaks the gromacs
     modulefile; GPUs are Quadro RTX 6000, not A100 (§6).
   - `gpu` QOS caps this user at 12 running jobs / 16 GPUs → the full campaign must be
-    one throttled job array (§9).
+    one throttled job array (§9). *(Superseded 2026-09-20 — see below.)*
+- **2026-09-20 (a)** — Analysis extended. `cluster_analysis.py` written (RDF-derived
+  cutoff, contact graph, connected components) and wired into `run_md.sh`; validated
+  against OVITO at 72 vs ~70 for the Li pilot (§8.1). Both counting conventions are
+  reported after establishing that
+  `n_components = n_clusters + n_free_cation + n_free_anion`.
+  `collect_results.py` gained achieved molarity (`molarity_actual`,
+  `molarity_err_pct`, `box_equil_nm`), dataset row linkage (`row_index`, `csv_line`)
+  and the cluster block. `build_run_manifest.py` written so all 2000 rows are indexed
+  and costed before anything is built.
+- **2026-09-20 (b)** — **Dataset rebuilt (§2.2).** The concentration/MW mismatch was
+  escalated from "flagged, not acted on" to fixed: MW ≤ 200 and M ≤ 1.5. Median solvent
+  per ion pair 2.3 → 5.97; rows below 2 went 849 → 0. Chemistry filters (aldehyde,
+  protic, radical, boron, phosphate ester) moved into the generator, reversing the
+  earlier "do not filter" decision. Consequences:
+  - Scripts and datasets were **replaced in place** at your instruction — no v2 variants.
+  - The new 490 solvents have zero overlap with the old 490, so the entire force-field
+    library was cleared and refetched: 490/490, 2450 files.
+  - 6 LigParGen failures (5 carbon radicals + 1 thiophene) → radical filter added, and
+    the generator now reads `ff_failures.csv` back so each one-off reject is paid once.
+  - Median system grew 6.4k → 12.5k atoms (30.7M atom-runs total). Accepted: that is the
+    cost of having enough solvent to form a real solvation shell.
+- **2026-09-20 (c)** — **Campaign driver, and a GPU-safety correction.**
+  `submit_campaign.sbatch` + `campaign_worker.sh` + `campaign_status.py` replace the
+  `launch_batch.py` array path for the 2000 (§9). Row-strided lanes, per-run
+  `pipeline.log`, graceful stop 45 min before the wall.
+  - Originally 3 nodes × 4 GPUs = 12 concurrent. Changed to **3 × 1 GPU = 3 concurrent**
+    after finding every partition GPU held by single-GPU jobs: a whole-node request
+    would have queued 25–84 h. Trades throughput (~85 h → ~330 h) for starting now.
+  - **The `gpu` partition does not isolate GPUs per job** (§6 gotcha 4). Found by
+    trespassing on three GPUs belonging to another user during a 4-GPU concurrency test
+    on a 1-GPU allocation. The per-lane `CUDA_VISIBLE_DEVICES` assignment was removed;
+    the script now only ever trusts what SLURM exports, and warns if it is absent.
+  - Trial jobs cancelled and skipped entirely at your direction — the campaign's first
+    array task serves as the trial, since it is resumable and costs nothing to cancel.
+- **2026-09-20 (d)** — Session transcript moved to `MD/ht2000/session_transcript.txt`
+  (gitignored) and this plan brought back in line with the code.
