@@ -1,14 +1,14 @@
 row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_solvent,mw_salt,n_solvent,n_salt,solv_per_ion_pair,box_build_nm,n_atoms_est,solvent_ff,clamped,stage
-0,2,eld30870a64dbe,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCC1(C)C2CC(C)C(C)C21,0.43,Li,FSI,Sc771399b815d,152.281,187.074,931,64,14.547,7.2446,29501,True,False,not_built
-1,3,elee0b1845f655,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,C#Cc1sccc1C(C)(C)C,1.32,Li,FSI,Sb8c4ec3d9f9d,164.273,187.074,252,64,3.938,4.9848,6436,True,False,not_built
+0,2,eld30870a64dbe,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCC1(C)C2CC(C)C(C)C21,0.43,Li,FSI,Sc771399b815d,152.281,187.074,931,64,14.547,7.2446,29501,True,False,prod
+1,3,elee0b1845f655,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,C#Cc1sccc1C(C)(C)C,1.32,Li,FSI,Sb8c4ec3d9f9d,164.273,187.074,252,64,3.938,4.9848,6436,True,False,prod
 2,4,el8d5297d219b4,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CC(F)CC(C)(F)C#N,0.52,Li,FSI,S21ee62110bf4,133.141,187.074,872,64,13.625,6.7999,16336,True,False,not_built
-3,5,el3d46cb9ae887,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CC1CCC(=O)C(C)(C)CC1C,1.28,Li,FSI,S9a3e48c7329e,168.28,187.074,255,64,3.984,5.0362,8800,True,False,not_built
-4,6,el8149f90a08ac,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCCCCCC(=O)CC(C)CCC,0.3,Li,FSI,S013fdf74fdc1,198.35,187.074,1040,64,16.25,8.1683,42240,True,False,not_built
+3,5,el3d46cb9ae887,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CC1CCC(=O)C(C)(C)CC1C,1.28,Li,FSI,S9a3e48c7329e,168.28,187.074,255,64,3.984,5.0362,8800,True,False,prod
+4,6,el8149f90a08ac,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCCCCCC(=O)CC(C)CCC,0.3,Li,FSI,S013fdf74fdc1,198.35,187.074,1040,64,16.25,8.1683,42240,True,False,npt
 5,7,el1383b93c6c65,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCC(C)CCCC1C2CCC12C,1.28,Li,FSI,Sdad207b418e3,180.335,187.074,238,64,3.719,5.0362,9446,True,False,not_built
-6,8,elfa48d596fcee,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CC1C2C(C)(C)C3CC3(C)C12C,1.28,Li,FSI,Saa1a20217fa0,164.292,187.074,261,64,4.078,5.0362,8992,True,False,not_built
+6,8,elfa48d596fcee,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CC1C2C(C)(C)C3CC3(C)C12C,1.28,Li,FSI,Saa1a20217fa0,164.292,187.074,261,64,4.078,5.0362,8992,True,False,prod
 7,9,eld5e5f96ed643,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCC12CC(CN(C)CC1C)C1CC12,1.23,Li,FSI,S07a15c2261fc,193.334,187.074,233,64,3.641,5.1035,9261,True,False,not_built
 8,10,el8416c3c464f0,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CC1CCC(C)C12C(=O)CCCC2=O,1.1,Li,FSI,S6d81f6960de1,194.274,187.074,263,64,4.109,5.2971,9056,True,False,not_built
-9,11,el2b3ed79a0cfa,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCCCC(C)S(=O)(=O)Cl,0.88,Li,FSI,Sd18aae4c301d,184.688,187.074,356,64,5.562,5.7062,8828,True,False,not_built
+9,11,el2b3ed79a0cfa,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCCCC(C)S(=O)(=O)Cl,0.88,Li,FSI,Sd18aae4c301d,184.688,187.074,356,64,5.562,5.7062,8828,True,False,nvt_heat
 10,12,el573e9d2a77ce,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,C1CC2CC3C4CCC1C4C23,1.14,Li,FSI,Sf2f46e8065c2,148.249,187.074,331,64,5.172,5.2344,9577,True,False,not_built
 11,13,elfa1491aaefa1,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCCCCC(C)(C)CCC(C)C#N,0.61,Li,FSI,S020c91bb9432,195.35,187.074,501,64,7.828,6.4476,20179,True,False,not_built
 12,14,el9e1cb6fff65c,[Li+].[N-](S(=O)(=O)F)S(=O)(=O)F,CCC(C)OC(=O)CSC,1.23,Li,FSI,Sbb7fa83b9196,162.254,187.074,277,64,4.328,5.1035,7288,True,False,not_built
@@ -65,7 +65,7 @@ row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_so
 63,65,ela8737ac72215,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,COC(=O)C(C)CS(C)(=O)=O,0.48,Li,TFSI,S0daec2fd1c9a,180.225,287.088,680,64,10.625,6.9838,16664,True,False,not_built
 64,66,el9d1499380049,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,COCC(CC(C)C)C12CCCC1C2,0.66,Li,TFSI,Sd36c3e562983,196.334,287.088,439,64,6.859,6.2804,17706,True,False,not_built
 65,67,elf86190ea2878,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,COC(=O)CC1(CC(C)C)CCC1,1.41,Li,TFSI,S1dd77507259b,184.279,287.088,188,64,2.938,4.8764,7228,True,False,not_built
-66,68,eldea8394a6d7b,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,CC(Cl)CCC(C)C(F)(F)F,1.5,Li,TFSI,S9d4e73696978,188.62,287.088,169,64,2.641,4.7768,4911,True,False,not_built
+66,68,eldea8394a6d7b,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,CC(Cl)CCC(C)C(F)(F)F,1.5,Li,TFSI,S9d4e73696978,188.62,287.088,169,64,2.641,4.7768,4911,True,False,built
 67,69,ele2481c8a9925,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,CCC(C#N)C(C)CCC(C)C,1.01,Li,TFSI,S20c79f89aeba,167.296,287.088,314,64,4.906,5.45,11386,True,False,not_built
 68,70,el35861618eb88,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,CCC1CCCCC1C(=O)OC(C)C,0.83,Li,TFSI,S0856fd16b158,198.306,287.088,334,64,5.219,5.8185,13048,True,False,not_built
 69,71,el59d527e3b5dc,[Li+].[N-](S(=O)(=O)C(F)(F)F)S(=O)(=O)C(F)(F)F,CC(Cl)CC(C#N)CC(C)(C)C,0.7,Li,TFSI,S04f9354a0ce7,187.714,287.088,429,64,6.703,6.1585,13894,True,False,not_built
@@ -142,7 +142,7 @@ row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_so
 140,142,el6d2f96f0a36b,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,CCCCC(=O)C(C)(C)C(C)C,1.41,Li,Beti,S3f15ac81e06e,170.296,387.102,181,64,2.828,4.8764,7562,True,False,not_built
 141,143,el955f040a6f56,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,CC(C)(C)CC1CCCCC1C#N,0.39,Li,Beti,S3f5cb079c28a,179.307,387.102,834,64,13.031,7.4843,29764,True,False,not_built
 142,144,el9873bac46933,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,CCCC1(CC)C(COC)C1(C)C,0.79,Li,Beti,S768fb88d8bed,184.323,387.102,360,64,5.625,5.9151,14728,True,False,not_built
-143,145,eldb9ef8217aeb,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,C#Cc1cc(OC)cs1,1.5,Li,Beti,S6b03c5c2bd1f,138.191,387.102,203,64,3.172,4.7768,4453,True,False,not_built
+143,145,eldb9ef8217aeb,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,C#Cc1cc(OC)cs1,1.5,Li,Beti,S6b03c5c2bd1f,138.191,387.102,203,64,3.172,4.7768,4453,True,False,built
 144,146,eld855b5054355,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,CCCOC(=O)OC(C)N(C)CC,0.66,Li,Beti,Sc5afdc0d1f96,189.255,387.102,435,64,6.797,6.2804,15328,True,False,not_built
 145,147,el7f707acc9c69,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,CCC1CC(C)C(C)(C)C1(C)C,0.43,Li,Beti,S9493aee39285,168.324,387.102,798,64,12.469,7.2446,30136,True,False,not_built
 146,148,elad25cace5b76,[Li+].[N-](S(=O)(=O)C(F)(F)C(F)(F)F)S(=O)(=O)C(F)(F)C(F)(F)F,CCCCC(=O)CCC(C)(C)C#N,0.88,Li,Beti,S8c9ce98c9a2b,181.279,387.102,321,64,5.016,5.7062,11680,True,False,not_built
@@ -225,7 +225,7 @@ row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_so
 223,225,el7ffc08ad1c6a,[Li+].F[P-](F)(F)(F)(F)F,CSC(Cl)(Cl)SC,0.57,Li,PF6,S8be9c34179ac,177.121,151.903,602,64,9.406,6.595,8338,True,False,not_built
 224,226,el2a6d597b4de9,[Li+].F[P-](F)(F)(F)(F)F,CCCC(C)CC(C)S(C)(=O)=O,1.01,Li,PF6,S215eed19c40e,192.324,151.903,300,64,4.688,5.45,10112,True,False,not_built
 225,227,el12d32ef4fb1e,[Li+].F[P-](F)(F)(F)(F)F,CC1CC2CCC(C)C(C2)C1=O,0.43,Li,PF6,Sf4642924395b,166.264,151.903,861,64,13.453,7.2446,26342,True,False,not_built
-226,228,el85a96ea332f3,[Li+].F[P-](F)(F)(F)(F)F,CCS(=O)(=O)CC(C)CCCl,1.46,Li,PF6,S15e4a5daa0b8,198.715,151.903,192,64,3.0,4.8201,5504,True,False,not_built
+226,228,el85a96ea332f3,[Li+].F[P-](F)(F)(F)(F)F,CCS(=O)(=O)CC(C)CCCl,1.46,Li,PF6,S15e4a5daa0b8,198.715,151.903,192,64,3.0,4.8201,5504,True,False,built
 227,229,eleb5c111a2803,[Li+].F[P-](F)(F)(F)(F)F,CCCC(=O)C(C)C(C)(C)C,1.32,Li,PF6,S540c9bce5ae8,156.269,151.903,274,64,4.281,4.9848,9006,True,False,not_built
 228,230,elcda3e5fda03e,[Li+].F[P-](F)(F)(F)(F)F,CC(=O)CCC1CC(=O)C1C(C)C,0.43,Li,PF6,S5d41d348fe74,182.263,151.903,785,64,12.266,7.2446,24847,True,False,not_built
 229,231,elda73ab98268f,[Li+].F[P-](F)(F)(F)(F)F,CCC(C)CC1CC1C1CCCC1,1.28,Li,PF6,S61a35d171a0e,180.335,151.903,246,64,3.844,5.0362,9614,True,False,not_built
@@ -666,7 +666,7 @@ row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_so
 664,666,el9f0445aa076a,[Li+].[O-]C(=O)c1ccccc1,CCCC(C)CC1(C#N)CCC(C)C1,0.48,Li,BNZ,S438872e204ff,193.334,128.056,665,64,10.391,6.9838,25565,True,False,not_built
 665,667,elb43345f3db71,[Li+].[O-]C(=O)c1ccccc1,CC1CC(C2C(C)C(C)CC2(C)C)C1,0.66,Li,BNZ,S8f3fb4a9257f,194.362,128.056,474,64,7.406,6.2804,19920,True,False,not_built
 666,668,el5755d2dfb89c,[Li+].[O-]C(=O)c1ccccc1,CCCC(C)CC(=O)OC(C)=O,0.74,Li,BNZ,S8af73807eb6d,172.224,128.056,474,64,7.406,6.0454,14232,True,False,not_built
-667,669,ela6843a4d2812,[Li+].[O-]C(=O)c1ccccc1,CC(Cl)CCC(C)C(F)(F)F,1.46,Li,BNZ,S9d4e73696978,188.62,128.056,207,64,3.234,4.8201,5721,True,False,not_built
+667,669,ela6843a4d2812,[Li+].[O-]C(=O)c1ccccc1,CC(Cl)CCC(C)C(F)(F)F,1.46,Li,BNZ,S9d4e73696978,188.62,128.056,207,64,3.234,4.8201,5721,True,False,built
 668,670,el91a0ea2d9fa6,[Li+].[O-]C(=O)c1ccccc1,COC(=O)C(C)C(C)S(=O)(=O)F,1.19,Li,BNZ,Saa5f97f3f22c,198.215,128.056,247,64,3.859,5.1601,6641,True,False,not_built
 669,671,el24b0d2c57d26,[Li+].[O-]C(=O)c1ccccc1,CC1(C)C2C3CCC4C3CC2C41C,0.74,Li,BNZ,S03b1c3d6608e,176.303,128.056,463,64,7.234,6.0454,16239,True,False,not_built
 670,672,el4a91e0406188,[Li+].[O-]C(=O)c1ccccc1,CCCC(Cl)C(C#N)CC,1.19,Li,BNZ,S08ece3fc4c24,159.66,128.056,307,64,4.797,5.1601,8328,True,False,not_built
@@ -974,7 +974,7 @@ row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_so
 972,974,el2006e05afeb2,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CCC(CC)(CCl)C1CC1,1.46,Li,OTs,S5807104c1f38,160.688,178.138,231,64,3.609,4.8201,7453,True,False,not_built
 973,975,el946e5c4d944c,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CCCCC(SC)SSC,0.83,Li,OTs,S18e7dafbc7d1,196.406,178.138,358,64,5.594,5.8185,10524,True,False,not_built
 974,976,el9cb6c696077b,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CCC1(C#N)CCCCC(=O)O1,0.61,Li,OTs,S42a5d3df1f5a,167.208,178.138,587,64,9.172,6.4476,15891,True,False,not_built
-975,977,el5e22e7ef4f06,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CC(=O)N(OC(=O)OCF)C(C)=O,1.5,Li,OTs,S405908ff67ce,193.13,178.138,186,64,2.906,4.7768,5122,True,False,not_built
+975,977,el5e22e7ef4f06,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CC(=O)N(OC(=O)OCF)C(C)=O,1.5,Li,OTs,S405908ff67ce,193.13,178.138,186,64,2.906,4.7768,5122,True,False,built
 976,978,elb6bdc2f35637,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CC(C)(C)c1ccc2c(c1)ON(F)O2,0.39,Li,OTs,Sfff8dded6392,197.209,178.138,798,64,12.469,7.4843,21964,True,False,not_built
 977,979,el7d45c86102fb,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CCCC(C)C(F)CCC(C)C,0.88,Li,OTs,S16c5a20ab57f,174.303,178.138,379,64,5.922,5.7062,14481,True,False,not_built
 978,980,ele867d38b5e53,[Li+].[O-]S(=O)(=O)c1ccc(C)cc1,CC(CF)C1(CF)CCOC1,0.92,Li,OTs,Se980182157d3,164.195,178.138,383,64,5.984,5.6222,10791,True,False,not_built
@@ -1457,7 +1457,7 @@ row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_so
 1455,1457,el5bdf5f2f2843,[Na+].[O-][N+](=O)=O,CCCC1C(CC)OCC1C1(C)CC1,1.37,Na,NO3,S51a7cc6e236d,196.334,84.994,222,64,3.469,4.9234,8756,True,False,not_built
 1456,1458,elccd606b17a5d,[Na+].[O-][N+](=O)=O,CC1CCCC2C(C1)CC(C)C2(C)C,0.61,Na,NO3,S64644640c1ff,194.362,84.994,523,64,8.172,6.4476,21240,True,False,not_built
 1457,1459,el8a44e18c3e5c,[Na+].[O-][N+](=O)=O,CCC(C)C(OOC)C(C)C(C)C,0.88,Na,NO3,S8bb7ec38e979,188.311,84.994,369,64,5.766,5.7062,13973,True,False,not_built
-1458,1460,ele0b1568479f3,[Na+].[O-][N+](=O)=O,CSC(Cl)(Cl)SC,1.23,Na,NO3,S8be9c34179ac,177.121,84.994,276,64,4.312,5.1035,3908,True,False,not_built
+1458,1460,ele0b1568479f3,[Na+].[O-][N+](=O)=O,CSC(Cl)(Cl)SC,1.23,Na,NO3,S8be9c34179ac,177.121,84.994,276,64,4.312,5.1035,3908,True,False,built
 1459,1461,el29f955bba20a,[Na+].[O-][N+](=O)=O,CCCC(C)C(C)CCC(=O)CC#N,1.41,Na,NO3,S5abea7358f4a,195.306,84.994,216,64,3.375,4.8764,7880,True,False,not_built
 1460,1462,el03d5f83ce686,[Na+].[O-][N+](=O)=O,CCCCC(CC)CC(C)C(C)CC,1.41,Na,NO3,S49a4630f52c4,198.394,84.994,213,64,3.328,4.8764,9692,True,False,not_built
 1461,1463,el19f36d633717,[Na+].[O-][N+](=O)=O,CC1C(=O)CCC2(C#N)C(C3CC3)C12,0.39,Na,NO3,Sc049651726c3,189.258,84.994,850,64,13.281,7.4843,24970,True,False,not_built
@@ -1841,7 +1841,7 @@ row_index,csv_line,key,salt,solvent,concentration,cation,anion,solvent_key,mw_so
 1839,1841,eld84f075f03ee,[Na+].[S-]C#N,CC(C)CC(F)(F)C(C)CF,0.3,Na,SCN,S95a88cb3ce65,168.202,81.075,1250,64,19.531,8.1683,32756,True,False,not_built
 1840,1842,el84233f8d5c08,[Na+].[S-]C#N,CCC1(C)CC2C(C)C2C1C(=O)OC,1.19,Na,SCN,Sf7a80b70e1cf,196.29,81.075,258,64,4.031,5.1601,9028,True,False,not_built
 1841,1843,el977ba23a3cfd,[Na+].[S-]C#N,CCC(C(C)C)C1CCC(C)(C)C1C,0.92,Na,SCN,Sfcb43392bce6,196.378,81.075,339,64,5.297,5.6222,14494,True,False,not_built
-1842,1844,el6eebc76e44f9,[Na+].[S-]C#N,CCC(Cl)C(=O)C(C)=O,1.32,Na,SCN,Sa32c8c1fefe2,148.589,81.075,306,64,4.781,4.9848,5764,True,False,not_built
+1842,1844,el6eebc76e44f9,[Na+].[S-]C#N,CCC(Cl)C(=O)C(C)=O,1.32,Na,SCN,Sa32c8c1fefe2,148.589,81.075,306,64,4.781,4.9848,5764,True,False,built
 1843,1845,el70c3b8b38d39,[Na+].[S-]C#N,CCC1CC(C(C)C)C(C)(C)C1C,0.43,Na,SCN,Sb4bbb829a6cc,182.351,81.075,799,64,12.484,7.2446,31417,True,False,not_built
 1844,1846,el2a263f9c4223,[Na+].[S-]C#N,CCC(CC)C(C)C1CC(C)C1C,0.39,Na,SCN,S704174ceff3d,182.351,81.075,883,64,13.797,7.4843,34693,True,False,not_built
 1845,1847,el865778db69f1,[Na+].[S-]C#N,CC1COCC2(C1)C(=O)OCC2C#N,0.97,Na,SCN,S1c44bbe44955,195.218,81.075,322,64,5.031,5.5239,8950,True,False,not_built

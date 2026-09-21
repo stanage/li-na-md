@@ -27,7 +27,6 @@ Usage (login node):
 from __future__ import annotations
 
 import argparse
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -143,8 +142,13 @@ def main() -> int:
           + (f", {human(freed)} freed" if args.prune else ""))
     if not args.prune and todo:
         print("run again with --prune to free the local trajectories")
-    du = shutil.disk_usage(RUNS.resolve())
-    print(f"scratch now: {human(du.used)} used of {human(du.total)}")
+    # NOT shutil.disk_usage: that reports the whole shared scratch filesystem
+    # (hundreds of TB), which says nothing about this campaign or the 2 TB
+    # per-user quota it actually has to fit inside.
+    local = sum(f.stat().st_size for d in RUNS.glob("el*")
+                for f in d.iterdir() if f.is_file())
+    print(f"campaign on scratch: {human(local)} in "
+          f"{len(list(RUNS.glob('el*')))} run dirs")
     return 1 if failed else 0
 
 
