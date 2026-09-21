@@ -1,0 +1,6 @@
+ATOM      1 Cl1  clo     1      -0.218  -0.096   0.000                      Cl
+ATOM      2  O1  clo     1      -1.868  -0.096   0.000                       O
+ATOM      3  O2  clo     1       0.332   0.682   1.347                       O
+ATOM      4  O3  clo     1       0.332  -1.652   0.000                       O
+ATOM      5  O4  clo     1       0.332   0.682  -1.347                       O
+END

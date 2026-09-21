@@ -1,0 +1,5 @@
+ATOM      1  C   hco     1       0.041   0.105   0.000                       C
+ATOM      2  H   hco     1      -1.085   0.078   0.000                       H
+ATOM      3  O   hco     1       0.578  -1.003   0.000                       O
+ATOM      4  O   hco     1       0.605   1.199   0.000                       O
+END

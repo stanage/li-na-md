@@ -1,0 +1,15 @@
+ATOM      1  C1  bnz     1       0.000   0.000   0.000                       C
+ATOM      2  C2  bnz     1       0.000   0.000   1.413                       C
+ATOM      3  C3  bnz     1       1.238   0.000  -0.682                       C
+ATOM      4  C4  bnz     1       1.213   0.000   2.132                       C
+ATOM      5  C5  bnz     1       2.453   0.000   0.033                       C
+ATOM      6  C6  bnz     1       2.440   0.000   1.442                       C
+ATOM      7  C7  bnz     1      -1.298  -0.000  -0.767                       C
+ATOM      8  H2  bnz     1      -0.946   0.000   1.935                       H
+ATOM      9  H3  bnz     1       1.238  -0.000  -1.763                       H
+ATOM     10  H4  bnz     1       1.193   0.000   3.211                       H
+ATOM     11  H5  bnz     1       3.389  -0.000  -0.504                       H
+ATOM     12  H6  bnz     1       3.369   0.000   1.991                       H
+ATOM     13  O7A bnz     1      -2.362  -0.000  -0.108                       O
+ATOM     14  O7B bnz     1      -1.234  -0.000  -2.017                       O
+END

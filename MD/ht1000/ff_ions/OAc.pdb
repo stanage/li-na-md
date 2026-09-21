@@ -1,0 +1,8 @@
+ATOM      1  CZ  oac     1      -0.162   0.384   0.226                       C
+ATOM      2  C   oac     1       0.450   1.325   1.247                       C
+ATOM      3  H   oac     1       0.066   2.331   1.089                       H
+ATOM      4  H   oac     1       0.190   0.991   2.251                       H
+ATOM      5  H   oac     1       1.533   1.328   1.135                       H
+ATOM      6  O   oac     1      -1.308   0.717  -0.142                       O
+ATOM      7  O   oac     1       0.530  -0.595  -0.125                       O
+END

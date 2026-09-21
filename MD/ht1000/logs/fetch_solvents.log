@@ -1,0 +1,10 @@
+6 unique solvents | 0 cached | 6 to fetch
+[   1/6] ok   Sd3005650658b CC(C)C(C)OC(C)C(F)(F)F                               eta   0.5m
+[   2/6] ok   S235b658d4b26 CCC1OC(=O)CCC1C(C)C                                  eta   0.4m
+[   3/6] ok   Scac2624e0cf1 CCC(CC)OP(=O)(Cl)CC                                  eta   0.3m
+[   4/6] ok   S590d3ec55b88 CCCC(F)(CC)C(C)=O                                    eta   0.2m
+[   5/6] ok   Sa3d3e58a44f1 CCCC(=O)C1CCCC(=O)C1CC                               eta   0.1m
+[   6/6] ok   Sc99d9b16dbb5 CCCCC(OC)C(CC)CC                                     eta   0.0m
+
+fetched 6, failed 0, in 0.7 min
+manifest -> /project/chibueze/stanley/projects/li-na-md/MD/ht1000/index/solvent_manifest.csv

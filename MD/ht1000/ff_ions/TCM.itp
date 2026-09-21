@@ -1,0 +1,62 @@
+; TCM -- ion parameters for the ht1000 campaign
+; assembled by build_ion_ff.py; charges UNSCALED (ECC scaling applied at run-build time)
+
+[ atomtypes ]
+;  name       at.nr   mass    charge  ptype  sigma(nm)   epsilon(kJ/mol)
+  an_CV             6   12.0110   -0.9430  A  3.30000e-01 2.76144e-01
+  an_CZ             6   12.0110    0.6440  A  3.30000e-01 2.76144e-01
+  an_NZ             7   14.0070   -0.6630  A  3.20000e-01 7.11280e-01
+
+[ moleculetype ]
+; name  nrexcl
+an   3
+
+[ atoms ]
+;  nr    type  resnr  residue  atom  cgnr    charge      mass
+    1  an_CV         1  tcm   C1       1   -0.943000  12.011
+    2  an_CZ         1  tcm   C2       1    0.644000  12.011
+    3  an_CZ         1  tcm   C3       1    0.644000  12.011
+    4  an_CZ         1  tcm   C4       1    0.644000  12.011
+    5  an_NZ         1  tcm   N5       1   -0.663000  14.007
+    6  an_NZ         1  tcm   N6       1   -0.663000  14.007
+    7  an_NZ         1  tcm   N7       1   -0.663000  14.007
+
+[ bonds ]
+;   ai   aj funct  c0(nm)  c1(kJ mol-1 nm-2) ro(Ang.) kr(kcal mol-1 Ang.-2)
+2    5    1    0.1157    543920    ;    1.157    650    CZ-NZ
+3    6    1    0.1157    543920    ;    1.157    650    CZ-NZ
+4    7    1    0.1157    543920    ;    1.157    650    CZ-NZ
+1    2    1    0.1470    326352    ;    1.47     390    CZ-CV
+1    3    1    0.1470    326352    ;    1.47     390    CZ-CV
+1    4    1    0.1470    326352    ;    1.47     390    CZ-CV
+
+[ angles ]
+;   ai   aj   ak funct  c0(deg)  c1(kJ mol-1 rad-2)  c0(deg)  c1(kcal mol-1 rad-2)
+2    1    3    1    111.1    527.184    ;        111.1    63     CZ-CV-CZ
+2    1    4    1    111.1    527.184    ;        111.1    63     CZ-CV-CZ
+3    1    4    1    111.1    527.184    ;        111.1    63     CZ-CV-CZ
+5    2    1    1    180.0   1255.200    ;        180.0    150    CV-CZ-NZ
+6    3    1    1    180.0   1255.200    ;        180.0    150    CV-CZ-NZ
+7    4    1    1    180.0   1255.200    ;        180.0    150    CV-CZ-NZ
+
+[ dihedrals ]
+;   ai   aj   ak   al funct    c0        c1        c2    c3 (kJ/mol) ;   V1    V2  V3    V4 (kcal/mol)
+2    1    3    4    5    0.0000    9.2048    0.0000    0.0000    ;    0    2.2  0    0    CZ-CV-CZ-CZ  improper
+2    1    3    6    5    0.0000    0.0000    0.0000    0.0000    ;    0    0    0    0    CZ-CV-CZ-NZ
+2    1    4    3    5    0.0000    9.2048    0.0000    0.0000    ;    0    2.2  0    0    CZ-CV-CZ-CZ  improper
+2    1    4    7    5    0.0000    0.0000    0.0000    0.0000    ;    0    0    0    0    CZ-CV-CZ-NZ
+3    1    2    4    5    0.0000    9.2048    0.0000    0.0000    ;    0    2.2  0    0    CZ-CV-CZ-CZ  improper
+3    1    2    5    5    0.0000    0.0000    0.0000    0.0000    ;    0    0    0    0    CZ-CV-CZ-NZ
+3    1    4    7    5    0.0000    0.0000    0.0000    0.0000    ;    0    0    0    0    CZ-CV-CZ-NZ
+4    1    2    5    5    0.0000    0.0000    0.0000    0.0000    ;    0    0    0    0    CZ-CV-CZ-NZ
+4    1    3    6    5    0.0000    0.0000    0.0000    0.0000    ;    0    0    0    0    CZ-CV-CZ-NZ
+
+[ pairs ]
+; generated from the bond graph (3-bond separation);
+; the OPLS-2009IL distribution omits this section
+    2     6     1
+    2     7     1
+    3     5     1
+    3     7     1
+    4     5     1
+    4     6     1

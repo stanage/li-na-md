@@ -1,0 +1,44 @@
+; DCA -- ion parameters for the ht1000 campaign
+; assembled by build_ion_ff.py; charges UNSCALED (ECC scaling applied at run-build time)
+
+[ atomtypes ]
+;  name       at.nr   mass    charge  ptype  sigma(nm)   epsilon(kJ/mol)
+  an_N3A            7   14.0070   -0.7262  A  3.25000e-01 7.11280e-01
+  an_CZA            6   12.0110    0.6121  A  3.30000e-01 2.76144e-01
+  an_NZA            7   14.0070   -0.7490  A  3.20000e-01 7.11280e-01
+
+[ moleculetype ]
+; name  nrexcl
+an   3
+
+[ atoms ]
+;  nr    type  resnr  residue  atom  cgnr    charge      mass
+    1  an_N3A        1  dca   N3A      1   -0.726200  14.007
+    2  an_CZA        1  dca   CZA      1    0.612100  12.011
+    3  an_CZA        1  dca   CZA      1    0.612100  12.011
+    4  an_NZA        1  dca   NZA      1   -0.749000  14.007
+    5  an_NZA        1  dca   NZA      1   -0.749000  14.007
+
+[ bonds ]
+;   ai   aj funct  c0(nm)   c1(kJ mol-1 nm-2) ro(Ang.) kr(kcal mol-1 Ang.-2)
+1    2    1    0.1310    420600    ;    1.310    502.6    N3-CZ
+1    3    1    0.1310    420600    ;    1.310    502.6    N3-CZ
+2    4    1    0.1157    774600    ;    1.157    925.6    CZ-NZ
+3    5    1    0.1157    774600    ;    1.157    925.6    CZ-NZ
+
+[ angles ]
+;   ai   aj   ak funct  c0(deg)  c1(kJ mol-1 rad-2)  c0(deg) c1(kcal mol-1 rad-2)
+1    2    4    1    175.2    425    ;    175.2    50.8    N3-CZ-NZ
+1    3    5    1    175.2    425    ;    175.2    50.8    N3-CZ-NZ
+2    1    3    1    118.5    362    ;    118.5    43.3    CZ-N3-CZ
+
+[ dihedrals ]
+;   ai   aj   ak   al funct   c0      c1      c2   c3(kJ/mol) ;    V1     V2   V3   V4(kcal/mol)
+4    2    1    3    5    4.08    0.00    0.00    0.00    ;    0.975    0    0    0    NZ-CZ-N3-CZ
+5    3    1    2    5    4.08    0.00    0.00    0.00    ;    0.975    0    0    0    NZ-CZ-N3-CZ
+
+[ pairs ]
+; generated from the bond graph (3-bond separation);
+; the OPLS-2009IL distribution omits this section
+    2     5     1
+    3     4     1

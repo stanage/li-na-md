@@ -1,0 +1,14 @@
+; Cl -- ion parameters for the ht1000 campaign
+; assembled by build_ion_ff.py; charges UNSCALED (ECC scaling applied at run-build time)
+
+[ atomtypes ]
+;  name       at.nr   mass    charge  ptype  sigma(nm)   epsilon(kJ/mol)
+  an_Cl            17   35.4530   -1.0000  A  3.77000e-01 6.19232e-01
+
+[ moleculetype ]
+; name  nrexcl
+an   3
+
+[ atoms ]
+;  nr    type  resnr  residue  atom  cgnr    charge      mass
+    1  an_Cl         1  cl    Cl       1   -1.000000  35.453

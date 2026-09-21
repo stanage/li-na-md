@@ -1,0 +1,28 @@
+[ok]   OAc    2009IL     atoms=7   q=-1.0000
+[ok]   BF4    2009IL     atoms=5   q=-1.0000
+[ok]   BNZ    2009IL     atoms=14  q=-1.0000
+[ok]   Br     2009IL     atoms=1   q=-1.0000
+[ok]   Cl     2009IL     atoms=1   q=-1.0000
+[ok]   ClO4   2009IL     atoms=5   q=-1.0000
+[ok]   DCA    2009IL     atoms=5   q=-1.0000
+[ok]   HCOO   2009IL     atoms=4   q=-1.0000
+[ok]   MS     2009IL     atoms=9   q=-1.0000
+[ok]   NO3    2009IL     atoms=4   q=-1.0000
+[ok]   TFSI   2009IL     atoms=15  q=-1.0000
+[ok]   PF6    2009IL     atoms=7   q=-1.0000
+[ok]   PROP   2009IL     atoms=10  q=-1.0000
+[ok]   SCN    2009IL     atoms=3   q=-1.0000
+[ok]   TCM    2009IL     atoms=7   q=-1.0000
+[ok]   OTf    2009IL     atoms=8   q=-1.0000
+[ok]   FSI    oldrun     atoms=9   q=-1.0000
+[ok]   TFA    fftool     atoms=7   q=-1.0000
+[ok]   Beti   fftool     atoms=21  q=-1.0000
+[submit] [O-]S(=O)(=O)c1ccc(C)cc1  q=-1  cm1abcc opt=0
+  attempt failed (got [])
+[submit] [O-]S(=O)(=O)c1ccc(C)cc1  q=-1  cm1a opt=1
+  saved OTs.{lmp,pdb,itp,gro}
+[ok]   OTs    ligpargen  atoms=18  q=-0.9998
+[ok]   Li     builtin    atoms=1   q=+1.0000
+[ok]   Na     builtin    atoms=1   q=+1.0000
+
+manifest -> /project/chibueze/stanley/projects/li-na-md/MD/ht1000/ff_ions/ions_manifest.json
