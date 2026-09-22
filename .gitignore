@@ -7,4 +7,5 @@ EricMD.tar
 EricMD/
 MD/ht2000/session_transcript.txt
 __pycache__/
-MD/ht1000/
+MD/ht1000/runs
+MD/ht1000/session_transcript.txt
