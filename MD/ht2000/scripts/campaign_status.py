@@ -45,12 +45,25 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--failures", action="store_true", help="list failed runs")
     ap.add_argument("--lanes", action="store_true", help="per-lane breakdown")
+    ap.add_argument("--remaining", action="store_true",
+                    help="print only the number of runs left, for scripts")
+    ap.add_argument("--lane", type=int, help="with --remaining: one lane only")
+    ap.add_argument("--nlanes", type=int, default=3)
     args = ap.parse_args()
 
     man = disk_state()
     n = len(man)
     done = int((man.state == "complete").sum())
     runnable = int(man.solvent_ff.sum())
+
+    # Machine-readable, for the self-chaining step in submit_campaign.sbatch:
+    # a lane resubmits itself only while its own slice has work left.
+    if args.remaining:
+        m = man[man.solvent_ff.astype(bool)]
+        if args.lane is not None:
+            m = m[m.row_index % args.nlanes == args.lane]
+        print(int((m.state != "complete").sum()))
+        return 0
 
     print(f"campaign: {done}/{runnable} complete "
           f"({100*done/max(runnable,1):.1f}%)   "
